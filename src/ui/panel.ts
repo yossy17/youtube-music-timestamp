@@ -1,0 +1,200 @@
+import { Storage } from "../storage";
+import { createHeader } from "./header";
+import { createButtons, ButtonActions } from "./buttons";
+import { NoticeManager } from "./notice";
+import { messages } from "../i18n";
+
+export class Panel {
+  private element: HTMLElement;
+  private listBox: HTMLElement;
+  private notice: NoticeManager;
+  private dragging = false;
+  private dx = 0;
+  private dy = 0;
+
+  constructor(actions: ButtonActions) {
+    this.notice = new NoticeManager();
+    this.element = this.createElement();
+    this.listBox = this.createListBox();
+
+    // パネルを構成
+    const header = createHeader(this.handleDragStart.bind(this));
+    const buttons = createButtons(actions);
+
+    this.element.append(
+      header,
+      buttons,
+      this.listBox,
+      this.notice.getElement()
+    );
+
+    // ドラッグイベントを設定
+    this.setupDragEvents();
+
+    // 初期状態を設定
+    this.setVisible(Storage.getVisibility());
+
+    document.body.appendChild(this.element);
+  }
+
+  private createElement(): HTMLElement {
+    const EXISTING_ID = "ytm-ts";
+
+    // 重複パネル防止
+    const old = document.getElementById(EXISTING_ID);
+    if (old) old.remove();
+
+    const panel = document.createElement("div");
+    panel.id = EXISTING_ID;
+
+    const savedPosition = Storage.getPosition();
+    panel.style.cssText = `
+      position: fixed;
+      ${
+        savedPosition
+          ? `top:${savedPosition.top}px;left:${savedPosition.left}px;`
+          : `bottom:100px;right:40px;`
+      }
+      z-index: calc(infinity);
+      display: none;
+      background: rgba(10, 10, 15, 0.75);
+      color: rgb(240, 240, 245);
+      padding-inline: 12px;
+      padding-bottom: 12px;
+      border-radius: 16px;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: 13px;
+      width: 260px;
+      box-shadow:
+        rgba(0, 0, 0, 0.8) 0px 20px 40px,
+        rgba(255, 255, 255, 0.05) 0px 1px 0px inset;
+      backdrop-filter: blur(10px) saturate(180%);
+      user-select: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+
+    return panel;
+  }
+
+  private createListBox(): HTMLElement {
+    const listBox = document.createElement("div");
+    listBox.style.cssText = `
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 12px;
+      height: 140px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      line-height: 1.5;
+      user-select: text;
+      backdrop-filter: blur(8px);
+      box-shadow:
+        rgba(0, 0, 0, 0.4) 0px 4px 12px inset,
+        rgba(255, 255, 255, 0.02) 0px 1px 0px;
+      color: rgb(200, 200, 210);
+    `;
+    return listBox;
+  }
+
+  private handleDragStart(e: MouseEvent): void {
+    this.dragging = true;
+    this.dx = e.clientX - this.element.offsetLeft;
+    this.dy = e.clientY - this.element.offsetTop;
+    this.element.style.transition = "none";
+  }
+
+  private setupDragEvents(): void {
+    const clamp = (val: number, min: number, max: number) =>
+      Math.max(min, Math.min(max, val));
+
+    document.addEventListener("mousemove", (e) => {
+      if (!this.dragging) return;
+
+      const left = clamp(
+        e.clientX - this.dx,
+        6,
+        window.innerWidth - this.element.offsetWidth - 6
+      );
+      const top = clamp(
+        e.clientY - this.dy,
+        6,
+        window.innerHeight - this.element.offsetHeight - 6
+      );
+
+      this.element.style.left = left + "px";
+      this.element.style.top = top + "px";
+      this.element.style.right = "auto";
+      this.element.style.bottom = "auto";
+    });
+
+    const endDrag = () => {
+      if (!this.dragging) return;
+      this.dragging = false;
+      Storage.savePosition({
+        left: this.element.offsetLeft,
+        top: this.element.offsetTop,
+      });
+      this.element.style.transition = "";
+    };
+
+    document.addEventListener("mouseup", endDrag);
+
+    // ウィンドウリサイズ時のパネル位置調整
+    window.addEventListener("resize", () => {
+      const clamp = (val: number, min: number, max: number) =>
+        Math.max(min, Math.min(max, val));
+
+      const left = clamp(
+        this.element.offsetLeft,
+        6,
+        window.innerWidth - this.element.offsetWidth - 6
+      );
+      const top = clamp(
+        this.element.offsetTop,
+        6,
+        window.innerHeight - this.element.offsetHeight - 6
+      );
+
+      this.element.style.left = left + "px";
+      this.element.style.top = top + "px";
+    });
+  }
+
+  setVisible(visible: boolean): void {
+    this.element.style.display = visible ? "block" : "none";
+    Storage.saveVisibility(visible);
+  }
+
+  toggleVisibility(): void {
+    const isVisible = this.element.style.display !== "none";
+    this.setVisible(!isVisible);
+  }
+
+  updateTimestampList(timestamps: string[]): void {
+    this.listBox.textContent = timestamps.length
+      ? timestamps.join("\n")
+      : messages.nothing;
+
+    // 新しいコンテンツが追加された時に自動スクロール
+    this.listBox.scrollTop = this.listBox.scrollHeight;
+  }
+
+  setNotice(message: string): void {
+    this.notice.setMessage(message);
+  }
+
+  clearNotice(): void {
+    this.notice.clear();
+  }
+
+  isPendingReset(): boolean {
+    // リセット状態を外部から確認できるようにする
+    return (
+      this.notice.getElement().textContent?.includes("秒後") ||
+      this.notice.getElement().textContent?.includes("resetting") ||
+      false
+    );
+  }
+}

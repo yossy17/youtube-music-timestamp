@@ -1,0 +1,117 @@
+import { messages } from "../i18n";
+import { Panel } from "../ui/panel";
+import { TimestampActions } from "./actions";
+
+export class ResetManager {
+  private panel: Panel;
+  private actions: TimestampActions;
+  private currentTrackTitle: string | null = null;
+  private resetTimeout: number | null = null;
+  private countdownInterval: number | null = null;
+  private pendingReset = false;
+  private resetCountdown = 0;
+
+  constructor(panel: Panel, actions: TimestampActions) {
+    this.panel = panel;
+    this.actions = actions;
+    this.initTitle();
+    this.setupTrackDetection();
+  }
+
+  private getTitleText(): string | null {
+    const t = document.querySelector("ytmusic-player-bar .title");
+    return t?.textContent?.trim() || null;
+  }
+
+  private initTitle(): void {
+    const t = this.getTitleText();
+    if (t) this.currentTrackTitle = t;
+  }
+
+  private cancelPendingReset(): void {
+    if (this.resetTimeout) clearTimeout(this.resetTimeout);
+    if (this.countdownInterval) clearInterval(this.countdownInterval);
+    this.resetTimeout = null;
+    this.countdownInterval = null;
+    this.pendingReset = false;
+    this.resetCountdown = 0;
+    this.panel.clearNotice();
+  }
+
+  private scheduleResetIfNeeded(): void {
+    // 保存データがある場合のみリセット
+    if (!this.actions.hasTimestamps()) return;
+
+    this.cancelPendingReset();
+    this.pendingReset = true;
+    this.resetCountdown = 5;
+
+    // 即座に通知を更新
+    this.panel.setNotice(
+      messages.noticeReset.replace("{}", this.resetCountdown.toString())
+    );
+
+    // カウントダウンインターバル
+    this.countdownInterval = window.setInterval(() => {
+      this.resetCountdown--;
+      if (this.resetCountdown > 0) {
+        this.panel.setNotice(
+          messages.noticeReset.replace("{}", this.resetCountdown.toString())
+        );
+      }
+    }, 1000);
+
+    // 5秒後にリセット実行
+    this.resetTimeout = window.setTimeout(() => {
+      if (this.actions.hasTimestamps()) {
+        this.actions.reset();
+      }
+      this.pendingReset = false;
+      this.panel.clearNotice();
+      if (this.countdownInterval) {
+        clearInterval(this.countdownInterval);
+        this.countdownInterval = null;
+      }
+    }, 5000);
+  }
+
+  // pendingResetの状態を取得
+  isPendingReset(): boolean {
+    return this.pendingReset;
+  }
+
+  private setupTrackDetection(): void {
+    // DOM変更監視（楽曲変更検出用）
+    const mo = new MutationObserver(() => {
+      const t = this.getTitleText();
+      if (!t) return;
+
+      if (this.currentTrackTitle === null) {
+        this.currentTrackTitle = t;
+        return;
+      }
+
+      if (t !== this.currentTrackTitle) {
+        this.currentTrackTitle = t;
+        // 保存データがある場合のみリセットスケジュール
+        this.scheduleResetIfNeeded();
+      }
+    });
+
+    mo.observe(document.body, { childList: true, subtree: true });
+
+    // ページルート変更時の安全処理
+    window.addEventListener(
+      "yt-page-data-updated",
+      () => {
+        this.initTitle();
+      },
+      { passive: true }
+    );
+  }
+
+  // 外部からリセットキャンセルを可能にする
+  cancelReset(): void {
+    this.cancelPendingReset();
+  }
+}
