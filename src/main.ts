@@ -2,6 +2,7 @@ import { Panel } from "./ui/panel";
 import { TimestampActions } from "./core/actions";
 import { ResetManager } from "./core/reset";
 import { ShortcutManager } from "./core/shortcuts";
+import "./addon";
 
 (() => {
   "use strict";
