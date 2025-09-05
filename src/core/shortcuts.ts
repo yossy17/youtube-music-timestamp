@@ -2,6 +2,7 @@ import { Panel } from "../ui/panel";
 import { TimestampActions } from "./actions";
 import { ResetManager } from "./reset";
 import { Storage } from "../storage";
+import { geniusSearch } from "./genius";
 
 // キーバインド定義
 const KEY_BINDINGS: Record<string, string> = {
@@ -11,6 +12,9 @@ const KEY_BINDINGS: Record<string, string> = {
   "4": "copy",
   "5": "clear",
   "6": "toggleAutoReset",
+  "7": "geniusSearchBoth",
+  "8": "geniusSearchTitle",
+  "9": "geniusSearchArtist",
 };
 
 export class ShortcutManager {
@@ -67,6 +71,15 @@ export class ShortcutManager {
           break;
         case "toggleAutoReset":
           this.toggleAutoReset();
+          break;
+        case "geniusSearchBoth":
+          geniusSearch("both");
+          break;
+        case "geniusSearchTitle":
+          geniusSearch("title");
+          break;
+        case "geniusSearchArtist":
+          geniusSearch("artist");
           break;
       }
     });

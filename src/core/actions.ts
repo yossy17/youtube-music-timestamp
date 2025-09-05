@@ -53,7 +53,7 @@ export class TimestampActions {
 
   // オートリセット無効通知を表示
   showAutoResetDisabled(): void {
-    this.setTemporaryNotice(messages.disabledAutoReset, 2000);
+    this.setTemporaryNotice(messages.toggleAutoReset, 2000);
   }
 
   // 通知をクリア

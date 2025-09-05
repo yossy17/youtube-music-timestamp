@@ -7,7 +7,12 @@ export interface I18nMessages {
   noticeReset: string;
   copied: string;
   nothing: string;
-  disabledAutoReset: string;
+  toggleAutoReset: string;
+  toggleAutoResetButtonTitle: string;
+  geniusSearchBoth: string;
+  geniusSearchTitle: string;
+  geniusSearchArtist: string;
+  geniusSearchButtonTitle: string;
 }
 
 export const i18n: Record<string, I18nMessages> = {
@@ -20,7 +25,12 @@ export const i18n: Record<string, I18nMessages> = {
     noticeReset: "次の曲を検出 {}秒後にリセットします…",
     copied: "コピーしました",
     nothing: "タイムスタンプがありません",
-    disabledAutoReset: "自動リセットは無効です",
+    toggleAutoReset: "自動リセットは無効です",
+    toggleAutoResetButtonTitle: "タイムスタンプの自動リセット",
+    geniusSearchBoth: "曲名とアーティストで検索",
+    geniusSearchTitle: "曲名で検索",
+    geniusSearchArtist: "アーティストで検索",
+    geniusSearchButtonTitle: "Genius 検索",
   },
   en: {
     add: "Add (1)",
@@ -31,7 +41,12 @@ export const i18n: Record<string, I18nMessages> = {
     noticeReset: "Next track detected… resetting in {}s",
     copied: "Copied!",
     nothing: "No timestamps yet",
-    disabledAutoReset: "Auto reset is disabled",
+    toggleAutoReset: "Auto reset is disabled",
+    toggleAutoResetButtonTitle: "Timestamp Auto Reset",
+    geniusSearchBoth: "Search by song title and artist",
+    geniusSearchTitle: "Search by song title",
+    geniusSearchArtist: "Search by song artist",
+    geniusSearchButtonTitle: "Genius Search",
   },
   "zh-CN": {
     add: "添加 (1)",
@@ -42,7 +57,12 @@ export const i18n: Record<string, I18nMessages> = {
     noticeReset: "检测到下一首 {}秒后重置…",
     copied: "已复制！",
     nothing: "没有时间戳",
-    disabledAutoReset: "自动重置已禁用",
+    toggleAutoReset: "自动重置已禁用",
+    toggleAutoResetButtonTitle: "时间戳自动重置",
+    geniusSearchBoth: "按标题和歌手搜索",
+    geniusSearchTitle: "按标题搜索",
+    geniusSearchArtist: "按歌手搜索",
+    geniusSearchButtonTitle: "Genius 搜索",
   },
   ko: {
     add: "추가 (1)",
@@ -53,7 +73,12 @@ export const i18n: Record<string, I18nMessages> = {
     noticeReset: "다음 곡 감지… {}초 후 초기화",
     copied: "복사했습니다!",
     nothing: "타임스탬프가 없습니다",
-    disabledAutoReset: "자동 재설정이 비활성화되었습니다",
+    toggleAutoReset: "자동 재설정이 비활성화되었습니다",
+    toggleAutoResetButtonTitle: "타임스탬프 자동 재설정",
+    geniusSearchBoth: "제목과 아티스트로 검색",
+    geniusSearchTitle: "제목으로 검색",
+    geniusSearchArtist: "아티스트로 검색",
+    geniusSearchButtonTitle: "Genius 검색",
   },
 };
 
