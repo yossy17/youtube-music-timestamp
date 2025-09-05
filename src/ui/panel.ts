@@ -1,8 +1,9 @@
 import { Storage } from "../storage";
 import { createHeader } from "./header";
 import { createButtons, ButtonActions } from "./buttons";
-import { NoticeManager } from "./notice";
 import { messages } from "../i18n";
+import { createFooter } from "./footer";
+import { NoticeManager } from "./notice";
 
 export class Panel {
   private element: HTMLElement;
@@ -11,6 +12,7 @@ export class Panel {
   private dragging = false;
   private dx = 0;
   private dy = 0;
+  private footer: HTMLElement;
 
   constructor(actions: ButtonActions) {
     this.notice = new NoticeManager();
@@ -21,12 +23,12 @@ export class Panel {
     const header = createHeader(this.handleDragStart.bind(this));
     const buttons = createButtons(actions);
 
-    this.element.append(
-      header,
-      buttons,
-      this.listBox,
-      this.notice.getElement()
-    );
+    this.footer = createFooter();
+
+    const noticeWrapper = (this.footer as any)._noticeWrapper;
+    noticeWrapper.appendChild(this.notice.getElement());
+
+    this.element.append(header, buttons, this.listBox, this.footer);
 
     // ドラッグイベントを設定
     this.setupDragEvents();
@@ -143,9 +145,6 @@ export class Panel {
 
     // ウィンドウリサイズ時のパネル位置調整
     window.addEventListener("resize", () => {
-      const clamp = (val: number, min: number, max: number) =>
-        Math.max(min, Math.min(max, val));
-
       const left = clamp(
         this.element.offsetLeft,
         6,
@@ -187,14 +186,5 @@ export class Panel {
 
   clearNotice(): void {
     this.notice.clear();
-  }
-
-  isPendingReset(): boolean {
-    // リセット状態を外部から確認できるようにする
-    return (
-      this.notice.getElement().textContent?.includes("秒後") ||
-      this.notice.getElement().textContent?.includes("resetting") ||
-      false
-    );
   }
 }
