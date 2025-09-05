@@ -31,7 +31,8 @@ export const createHeader = (
   const ytmTimestampTitle = document.createElement("div");
   ytmTimestampTitle.textContent = "Timestamp";
   ytmTimestampTitle.style.cssText = `
-    font-size: 20px;
+    font-family: "Alternate Gothic W01 No 2", sans-serif !important;    
+    font-size: 28px;
     font-weight: bold;
     letter-spacing: 0.5px;
     background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(255 0 51) 100%);
