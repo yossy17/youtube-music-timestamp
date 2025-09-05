@@ -4,10 +4,9 @@ export class NoticeManager {
   constructor() {
     this.element = document.createElement("div");
     this.element.style.cssText = `
-      margin-top: 8px;
       font-size: 12px;
       color: rgba(255, 136, 136, 0.8);
-      font-style: italic;
+      font-weight: bold;
       min-height: 1em;
       text-shadow: 0px 0px 8px rgba(255, 136, 136, 0.3);
     `;
