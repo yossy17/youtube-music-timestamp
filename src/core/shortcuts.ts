@@ -1,5 +1,8 @@
 import { Panel } from "../ui/panel";
 import { TimestampActions } from "./actions";
+import { ResetManager } from "./reset";
+import { Storage } from "../storage";
+import { geniusSearch } from "./genius";
 
 // キーバインド定義
 const KEY_BINDINGS: Record<string, string> = {
@@ -8,15 +11,25 @@ const KEY_BINDINGS: Record<string, string> = {
   "3": "space",
   "4": "copy",
   "5": "clear",
+  "6": "toggleAutoReset",
+  "7": "geniusSearchBoth",
+  "8": "geniusSearchTitle",
+  "9": "geniusSearchArtist",
 };
 
 export class ShortcutManager {
   private panel: Panel;
   private actions: TimestampActions;
+  private resetManager: ResetManager;
 
-  constructor(panel: Panel, actions: TimestampActions) {
+  constructor(
+    panel: Panel,
+    actions: TimestampActions,
+    resetManager: ResetManager
+  ) {
     this.panel = panel;
     this.actions = actions;
+    this.resetManager = resetManager;
     this.setupShortcuts();
   }
 
@@ -56,6 +69,18 @@ export class ShortcutManager {
         case "clear":
           this.actions.clear();
           break;
+        case "toggleAutoReset":
+          this.toggleAutoReset();
+          break;
+        case "geniusSearchBoth":
+          geniusSearch("both");
+          break;
+        case "geniusSearchTitle":
+          geniusSearch("title");
+          break;
+        case "geniusSearchArtist":
+          geniusSearch("artist");
+          break;
       }
     });
 
@@ -66,6 +91,23 @@ export class ShortcutManager {
         this.panel.toggleVisibility();
       }
     });
+  }
+
+  private toggleAutoReset(): void {
+    const current = Storage.getAutoResetEnabled();
+    const next = !current;
+    Storage.setAutoResetEnabled(next);
+
+    if (!next) {
+      // OFFにしたら進行中のリセットはキャンセル
+      this.resetManager.cancelReset();
+    }
+
+    // フッターのUIを更新
+    const update = (this.panel as any).footer?._updateIndicator as (
+      enabled: boolean
+    ) => void;
+    update?.(next);
   }
 
   // Tampermonkey メニューコマンド

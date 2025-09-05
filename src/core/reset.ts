@@ -1,9 +1,7 @@
-import { messages } from "../i18n";
-import { Panel } from "../ui/panel";
 import { TimestampActions } from "./actions";
+import { Storage } from "../storage";
 
 export class ResetManager {
-  private panel: Panel;
   private actions: TimestampActions;
   private currentTrackTitle: string | null = null;
   private resetTimeout: number | null = null;
@@ -11,8 +9,7 @@ export class ResetManager {
   private pendingReset = false;
   private resetCountdown = 0;
 
-  constructor(panel: Panel, actions: TimestampActions) {
-    this.panel = panel;
+  constructor(actions: TimestampActions) {
     this.actions = actions;
     this.initTitle();
     this.setupTrackDetection();
@@ -35,29 +32,32 @@ export class ResetManager {
     this.countdownInterval = null;
     this.pendingReset = false;
     this.resetCountdown = 0;
-    this.panel.clearNotice();
+    this.actions.clearNotice();
   }
 
   private scheduleResetIfNeeded(): void {
     // 保存データがある場合のみリセット
     if (!this.actions.hasTimestamps()) return;
+    if (!Storage.getAutoResetEnabled()) return;
 
     this.cancelPendingReset();
     this.pendingReset = true;
     this.resetCountdown = 5;
 
     // 即座に通知を更新
-    this.panel.setNotice(
-      messages.noticeReset.replace("{}", this.resetCountdown.toString())
-    );
+    this.actions.showResetCountdown(this.resetCountdown);
 
     // カウントダウンインターバル
     this.countdownInterval = window.setInterval(() => {
+      if (!Storage.getAutoResetEnabled()) {
+        this.cancelPendingReset();
+        this.actions.showAutoResetDisabled();
+        return;
+      }
+
       this.resetCountdown--;
       if (this.resetCountdown > 0) {
-        this.panel.setNotice(
-          messages.noticeReset.replace("{}", this.resetCountdown.toString())
-        );
+        this.actions.showResetCountdown(this.resetCountdown);
       }
     }, 1000);
 
@@ -67,7 +67,6 @@ export class ResetManager {
         this.actions.reset();
       }
       this.pendingReset = false;
-      this.panel.clearNotice();
       if (this.countdownInterval) {
         clearInterval(this.countdownInterval);
         this.countdownInterval = null;
@@ -112,6 +111,23 @@ export class ResetManager {
 
   // 外部からリセットキャンセルを可能にする
   cancelReset(): void {
+    this.cancelPendingReset();
+  }
+
+  toggleAutoReset(): void {
+    const newState = !Storage.getAutoResetEnabled();
+    Storage.setAutoResetEnabled(newState);
+
+    if (!newState) {
+      this.cancelPendingReset();
+      this.actions.showAutoResetDisabled();
+    } else {
+      this.actions.clearNotice();
+    }
+  }
+
+  //  インスタンス破棄時の清理処理
+  dispose(): void {
     this.cancelPendingReset();
   }
 }

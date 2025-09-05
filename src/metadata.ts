@@ -21,6 +21,7 @@ export const metadata = {
     "GM_registerMenuCommand",
     "GM_setValue",
     "GM_getValue",
+    "GM_addStyle",
   ],
   license: "MIT",
 };

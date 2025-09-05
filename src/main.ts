@@ -2,12 +2,18 @@ import { Panel } from "./ui/panel";
 import { TimestampActions } from "./core/actions";
 import { ResetManager } from "./core/reset";
 import { ShortcutManager } from "./core/shortcuts";
+// import "./addon";
 
 (() => {
   "use strict";
 
+  GM_addStyle(`
+    @import url("https://db.onlinewebfonts.com/c/494eee3143d83527124d62f383506d6e?family=Alternate+Gothic+W01+No+2");
+  `);
+
   let panel: Panel;
   let actions: TimestampActions;
+  let resetManager: ResetManager;
 
   const createActionHandlers = () => ({
     onAdd: () => actions.add(),
@@ -26,9 +32,9 @@ import { ShortcutManager } from "./core/shortcuts";
 
     panel = new Panel(createActionHandlers());
     actions = new TimestampActions(panel);
-    new ResetManager(panel, actions);
+    resetManager = new ResetManager(actions);
 
-    const shortcuts = new ShortcutManager(panel, actions);
+    const shortcuts = new ShortcutManager(panel, actions, resetManager);
     shortcuts.setupMenuCommand();
 
     if (import.meta.env.MODE === "development") {
