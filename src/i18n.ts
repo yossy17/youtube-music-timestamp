@@ -17,11 +17,11 @@ export interface I18nMessages {
 
 export const i18n: Record<string, I18nMessages> = {
   ja: {
-    add: "追加 (1)",
-    undo: "戻る (2)",
-    space: "スペース (3)",
-    copy: "コピー (4)",
-    clear: "削除 (5)",
+    add: "追加",
+    undo: "戻る",
+    space: "スペース",
+    copy: "コピー",
+    clear: "削除",
     noticeReset: "次の曲を検出 {}秒後にリセットします…",
     copied: "コピーしました",
     nothing: "タイムスタンプがありません",

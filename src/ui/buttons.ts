@@ -8,9 +8,10 @@ export interface ButtonActions {
   onClear: () => void;
 }
 
-const makeBtn = (text: string): HTMLButtonElement => {
+const makeBtn = (text: string, shortcut: string): HTMLButtonElement => {
   const button = document.createElement("button");
-  button.textContent = text;
+  button.textContent = `${text} ${shortcut}`;
+
   button.style.cssText = `
     flex: 1 1 auto;
     padding: 8px 12px;
@@ -48,11 +49,11 @@ export const createButtons = (actions: ButtonActions): HTMLElement => {
     margin-bottom: 8px;
   `;
 
-  const addBtn = makeBtn(messages.add);
-  const undoBtn = makeBtn(messages.undo);
-  const spaceBtn = makeBtn(messages.space);
-  const copyBtn = makeBtn(messages.copy);
-  const clearBtn = makeBtn(messages.clear);
+  const addBtn = makeBtn(messages.add, "(1)");
+  const undoBtn = makeBtn(messages.undo, "(2)");
+  const spaceBtn = makeBtn(messages.space, "(3)");
+  const copyBtn = makeBtn(messages.copy, "(4)");
+  const clearBtn = makeBtn(messages.clear, "(5)");
 
   addBtn.addEventListener("click", actions.onAdd);
   undoBtn.addEventListener("click", actions.onUndo);

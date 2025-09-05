@@ -142,13 +142,13 @@ export const createFooter = (
   };
 
   geniusMenu.appendChild(
-    createGeniusMenuItem(messages.geniusSearchBoth, "both", "🎶")
+    createGeniusMenuItem(`${messages.geniusSearchBoth} (7)`, "both", "🎶")
   );
   geniusMenu.appendChild(
-    createGeniusMenuItem(messages.geniusSearchTitle, "title", "🎵")
+    createGeniusMenuItem(`${messages.geniusSearchTitle} (8)`, "title", "🎵")
   );
   geniusMenu.appendChild(
-    createGeniusMenuItem(messages.geniusSearchArtist, "artist", "👤")
+    createGeniusMenuItem(`${messages.geniusSearchArtist} (9)`, "artist", "👤")
   );
   footer.appendChild(geniusMenu);
 
@@ -187,7 +187,7 @@ export const createFooter = (
   });
 
   const indicatorTrack = document.createElement("div");
-  indicatorTrack.title = messages.toggleAutoResetButtonTitle;
+  indicatorTrack.title = `${messages.toggleAutoResetButtonTitle} (6)`;
   indicatorTrack.style.cssText = `
     position: relative;
     width: 48px;
