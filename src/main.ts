@@ -7,6 +7,10 @@ import { ShortcutManager } from "./core/shortcuts";
 (() => {
   "use strict";
 
+  GM_addStyle(`
+    @import url("https://db.onlinewebfonts.com/c/494eee3143d83527124d62f383506d6e?family=Alternate+Gothic+W01+No+2");
+  `);
+
   let panel: Panel;
   let actions: TimestampActions;
   let resetManager: ResetManager;
