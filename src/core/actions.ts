@@ -5,6 +5,7 @@ import { Panel } from "../ui/panel";
 export class TimestampActions {
   private timestamps: string[] = [];
   private panel: Panel;
+  private noticeTimeout: number | null = null;
 
   constructor(panel: Panel) {
     this.panel = panel;
@@ -25,6 +26,44 @@ export class TimestampActions {
   private updateDisplay(): void {
     this.panel.updateTimestampList(this.timestamps);
     Storage.saveTimestamps(this.timestamps);
+  }
+
+  private clearNoticeTimeout(): void {
+    if (this.noticeTimeout) {
+      clearTimeout(this.noticeTimeout);
+      this.noticeTimeout = null;
+    }
+  }
+
+  private setTemporaryNotice(message: string, duration: number = 1500): void {
+    this.clearNoticeTimeout();
+    this.panel.setNotice(message);
+    this.noticeTimeout = window.setTimeout(() => {
+      this.panel.clearNotice();
+      this.noticeTimeout = null;
+    }, duration);
+  }
+
+  // リセットカウントダウン通知を表示
+  showResetCountdown(countdown: number): void {
+    this.clearNoticeTimeout(); // 既存のタイマーをクリア
+    const message = messages.noticeReset.replace("{}", countdown.toString());
+    this.panel.setNotice(message);
+  }
+
+  // オートリセット無効通知を表示
+  showAutoResetDisabled(): void {
+    this.setTemporaryNotice(messages.disabledAutoReset, 2000);
+  }
+
+  // 通知をクリア
+  clearNotice(): void {
+    this.clearNoticeTimeout();
+    this.panel.clearNotice();
+  }
+
+  showTemporaryNotice(message: string, duration?: number): void {
+    this.setTemporaryNotice(message, duration);
   }
 
   add = (): void => {
@@ -49,30 +88,17 @@ export class TimestampActions {
 
   copy = (): void => {
     if (!this.timestamps.length) {
-      this.panel.setNotice(messages.nothing);
+      this.setTemporaryNotice(messages.nothing);
       return;
     }
 
     const text = this.timestamps.join("\n");
     try {
       GM_setClipboard(text);
-      this.panel.setNotice(messages.copied);
-      setTimeout(() => {
-        // リセット中でなければ通知をクリア
-        if (!this.panel.isPendingReset()) {
-          this.panel.clearNotice();
-        }
-      }, 1500);
+      this.setTemporaryNotice(messages.copied);
     } catch {
-      // フォールバック
       navigator.clipboard?.writeText(text).then(() => {
-        this.panel.setNotice(messages.copied);
-        setTimeout(() => {
-          // リセット中でなければ通知をクリア
-          if (!this.panel.isPendingReset()) {
-            this.panel.clearNotice();
-          }
-        }, 1500);
+        this.setTemporaryNotice(messages.copied);
       });
     }
   };
@@ -80,7 +106,7 @@ export class TimestampActions {
   clear = (): void => {
     this.timestamps = [];
     this.updateDisplay();
-    this.panel.clearNotice();
+    this.clearNotice();
   };
 
   getTimestamps(): string[] {
@@ -94,5 +120,11 @@ export class TimestampActions {
   reset(): void {
     this.timestamps = [];
     this.updateDisplay();
+    this.clearNotice();
+  }
+
+  //  インスタンス破棄時の清理処理
+  dispose(): void {
+    this.clearNoticeTimeout();
   }
 }

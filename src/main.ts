@@ -2,13 +2,14 @@ import { Panel } from "./ui/panel";
 import { TimestampActions } from "./core/actions";
 import { ResetManager } from "./core/reset";
 import { ShortcutManager } from "./core/shortcuts";
-import "./addon";
+// import "./addon";
 
 (() => {
   "use strict";
 
   let panel: Panel;
   let actions: TimestampActions;
+  let resetManager: ResetManager;
 
   const createActionHandlers = () => ({
     onAdd: () => actions.add(),
@@ -27,9 +28,9 @@ import "./addon";
 
     panel = new Panel(createActionHandlers());
     actions = new TimestampActions(panel);
-    new ResetManager(panel, actions);
+    resetManager = new ResetManager(actions);
 
-    const shortcuts = new ShortcutManager(panel, actions);
+    const shortcuts = new ShortcutManager(panel, actions, resetManager);
     shortcuts.setupMenuCommand();
 
     if (import.meta.env.MODE === "development") {

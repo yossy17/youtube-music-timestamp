@@ -7,6 +7,7 @@ export interface I18nMessages {
   noticeReset: string;
   copied: string;
   nothing: string;
+  disabledAutoReset: string;
 }
 
 export const i18n: Record<string, I18nMessages> = {
@@ -16,9 +17,10 @@ export const i18n: Record<string, I18nMessages> = {
     space: "スペース (3)",
     copy: "コピー (4)",
     clear: "削除 (5)",
-    noticeReset: "次の曲を検出。{}秒後にリセットします…",
-    copied: "コピーしました。",
-    nothing: "タイムスタンプがありません。",
+    noticeReset: "次の曲を検出 {}秒後にリセットします…",
+    copied: "コピーしました",
+    nothing: "タイムスタンプがありません",
+    disabledAutoReset: "自動リセットは無効です",
   },
   en: {
     add: "Add (1)",
@@ -28,7 +30,8 @@ export const i18n: Record<string, I18nMessages> = {
     clear: "Clear (5)",
     noticeReset: "Next track detected… resetting in {}s",
     copied: "Copied!",
-    nothing: "No timestamps yet.",
+    nothing: "No timestamps yet",
+    disabledAutoReset: "Auto reset is disabled",
   },
   "zh-CN": {
     add: "添加 (1)",
@@ -36,9 +39,10 @@ export const i18n: Record<string, I18nMessages> = {
     space: "空格 (3)",
     copy: "复制 (4)",
     clear: "删除 (5)",
-    noticeReset: "检测到下一首，{}秒后重置…",
+    noticeReset: "检测到下一首 {}秒后重置…",
     copied: "已复制！",
-    nothing: "没有时间戳。",
+    nothing: "没有时间戳",
+    disabledAutoReset: "自动重置已禁用",
   },
   ko: {
     add: "추가 (1)",
@@ -48,7 +52,8 @@ export const i18n: Record<string, I18nMessages> = {
     clear: "삭제 (5)",
     noticeReset: "다음 곡 감지… {}초 후 초기화",
     copied: "복사했습니다!",
-    nothing: "타임스탬프가 없습니다.",
+    nothing: "타임스탬프가 없습니다",
+    disabledAutoReset: "자동 재설정이 비활성화되었습니다",
   },
 };
 

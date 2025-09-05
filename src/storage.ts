@@ -2,11 +2,20 @@
 export const GM_POSITION_KEY = "ytm_ts_position";
 export const GM_VISIBLE_KEY = "ytm_ts_visible";
 export const SS_TIMESTAMPS_KEY = "ytm_ts_timestamps";
+export const GM_AUTORESET_KEY = "ytm_ts_autoreset";
 
 export interface Position {
   top: number;
   left: number;
 }
+
+export interface Settings {
+  autoResetEnabled: boolean;
+}
+
+export const defaultSettings: Settings = {
+  autoResetEnabled: true,
+};
 
 export class Storage {
   // SSからタイムスタンプデータ読み込み
@@ -40,5 +49,14 @@ export class Storage {
 
   static saveVisibility(visible: boolean): void {
     GM_setValue(GM_VISIBLE_KEY, visible);
+  }
+
+  // AutoReset設定の保存・読み込み
+  static getAutoResetEnabled(): boolean {
+    return GM_getValue(GM_AUTORESET_KEY, true);
+  }
+
+  static setAutoResetEnabled(enabled: boolean): void {
+    GM_setValue(GM_AUTORESET_KEY, enabled);
   }
 }
