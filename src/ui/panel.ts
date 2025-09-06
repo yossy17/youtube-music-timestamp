@@ -3,30 +3,29 @@ import { createHeader } from "./header";
 import { createButtons, ButtonActions } from "./buttons";
 import { messages } from "../i18n";
 import { createFooter } from "./footer";
-import { NoticeManager } from "./notice";
 
 export class Panel {
   private element: HTMLElement;
   private listBox: HTMLElement;
-  private notice: NoticeManager;
+  private footer: HTMLElement & {
+    _notice: any;
+    _updateIndicator: (enabled: boolean) => void;
+  };
   private dragging = false;
   private dx = 0;
   private dy = 0;
-  private footer: HTMLElement;
 
   constructor(actions: ButtonActions) {
-    this.notice = new NoticeManager();
     this.element = this.createElement();
     this.listBox = this.createListBox();
 
     // パネルを構成
-    const header = createHeader(this.handleDragStart.bind(this));
+    const header = createHeader(this.handleDragStart.bind(this), () =>
+      this.setVisible(false)
+    );
     const buttons = createButtons(actions);
 
     this.footer = createFooter();
-
-    const noticeWrapper = (this.footer as any)._noticeWrapper;
-    noticeWrapper.appendChild(this.notice.getElement());
 
     this.element.append(header, buttons, this.listBox, this.footer);
 
@@ -43,8 +42,7 @@ export class Panel {
     const EXISTING_ID = "ytm-ts";
 
     // 重複パネル防止
-    const old = document.getElementById(EXISTING_ID);
-    if (old) old.remove();
+    document.getElementById(EXISTING_ID)?.remove();
 
     const panel = document.createElement("div");
     panel.id = EXISTING_ID;
@@ -125,10 +123,12 @@ export class Panel {
         window.innerHeight - this.element.offsetHeight - 6
       );
 
-      this.element.style.left = left + "px";
-      this.element.style.top = top + "px";
-      this.element.style.right = "auto";
-      this.element.style.bottom = "auto";
+      Object.assign(this.element.style, {
+        left: left + "px",
+        top: top + "px",
+        right: "auto",
+        bottom: "auto",
+      });
     });
 
     const endDrag = () => {
@@ -181,10 +181,10 @@ export class Panel {
   }
 
   setNotice(message: string): void {
-    this.notice.setMessage(message);
+    this.footer._notice.setMessage(message);
   }
 
   clearNotice(): void {
-    this.notice.clear();
+    this.footer._notice.clear();
   }
 }

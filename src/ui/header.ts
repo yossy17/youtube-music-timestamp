@@ -1,47 +1,28 @@
+import { createChatgptButton } from "./header/chatgptButton";
+import { createTitle } from "./header/title";
+import { createCloseButton } from "./header/closeButton";
+
 export const createHeader = (
-  onDragStart: (e: MouseEvent) => void
+  onDragStart: (e: MouseEvent) => void,
+  onClose: () => void
 ): HTMLElement => {
   const header = document.createElement("div");
   header.style.cssText = `
     display: flex;
     align-items: center;
-    gap: 8px;
-    justify-content: center;
-    padding-top: 16px;
-    margin-bottom: 12px;
+    justify-content: space-between;
+    padding-inline: 8px;
     cursor: grab;
+    position: relative;
+    padding-block: 12px;
   `;
 
-  const ytmTimestampIcon = document.createElement("img");
-  ytmTimestampIcon.src =
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAUVBMVEVHcEz/ADP/ADP/ADP/ADP/ADP/ADP/ADP/ADP/ADP/ADL/////KlX/DD3/GUf/wc3/tcT/eJP/WHn/ydT/P2X/7fH/nrH/prj/3eP/g5z/orU7aniKAAAACnRSTlMArhtu7wLENt2SyxIIrQAAATxJREFUeNqFU1mWgyAQxC0qdLOjkPsfdFiiSDI+6wOfdFG9kxPTPHTLSOm4dMM8ndfVvC70xLJ+U/p1pA3Gtb/a5xf9wWu+2Bf6D5b5144cgOM3oz/0QUkRIRUcXvoc//p5rcymgXPQm1EflXVKDkr8fJc2sgCizcqdl1zmUwD3d7oLzoXEfu/4kTgiVJJnN85FeaRcqiPOocRnbDy1cIw5sW1IrSmRDqQrAluyO1aQ9Lci0ZHsAaWOKp5JkwkeIlti9kHGnIKIV4E5C4URIl3wnAeJR/lDwZgB2BNBYH6TcCGYZOHcx4+phOoCRXorlU8nVhc1yMBOhBrkJU3wh91DTbMWqtbBaVoL1ZTaylTJ1LRa6rZZaLW22DSrbXdG2+7ngXkeueehJdPT2JPpZnGmh9Vrcbe81c3N+v8BqrEmmUM9lVUAAAAASUVORK5CYII=";
-  ytmTimestampIcon.style.cssText = `
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    user-drag: none;
-    user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    pointer-events: none;
-  `;
+  const chatgpt = createChatgptButton();
+  const title = createTitle();
+  const close = createCloseButton(onClose);
 
-  const ytmTimestampTitle = document.createElement("div");
-  ytmTimestampTitle.textContent = "Timestamp";
-  ytmTimestampTitle.style.cssText = `
-    font-family: "Alternate Gothic W01 No 2", sans-serif !important;    
-    font-size: 28px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    background: linear-gradient(0deg, rgb(255, 255, 255) 0%, rgb(255 0 51) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  `;
+  header.append(chatgpt, title, close);
 
-  header.append(ytmTimestampIcon, ytmTimestampTitle);
   header.addEventListener("mousedown", onDragStart);
 
   return header;

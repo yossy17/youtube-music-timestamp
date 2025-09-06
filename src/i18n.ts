@@ -13,6 +13,9 @@ export interface I18nMessages {
   geniusSearchTitle: string;
   geniusSearchArtist: string;
   geniusSearchButtonTitle: string;
+  chatgptPrompt: string[];
+  chatgptPromptButtonTitle: string;
+  closeButtonTitle: string;
 }
 
 export const i18n: Record<string, I18nMessages> = {
@@ -31,13 +34,23 @@ export const i18n: Record<string, I18nMessages> = {
     geniusSearchTitle: "曲名で検索",
     geniusSearchArtist: "アーティストで検索",
     geniusSearchButtonTitle: "Genius 検索",
+    chatgptPrompt: [
+      "全ての時間に歌詞を対応させた完成版LRCファイルを出してください。",
+      "時間と歌詞の間には半角スペースを入れてください。",
+      "各行の最後はスペース要素がないようにしてください。",
+      "[Verse 1]や[Chorus]や最初にタイトルなどの要素がある場合、その要素は無視してください。",
+      "LRCファイルを出した後、[Verse 1]や[Chorus]や最初にタイトルなどの要素を消したプレーンな歌詞を出してください。",
+      "もし行数が合わないやどちらかが空の行があった場合教えてください。",
+    ],
+    chatgptPromptButtonTitle: "ChatGPT プロンプト",
+    closeButtonTitle: "閉じる",
   },
   en: {
-    add: "Add (1)",
-    undo: "Undo (2)",
-    space: "Space (3)",
-    copy: "Copy (4)",
-    clear: "Clear (5)",
+    add: "Add",
+    undo: "Undo",
+    space: "Space",
+    copy: "Copy",
+    clear: "Clear",
     noticeReset: "Next track detected… resetting in {}s",
     copied: "Copied!",
     nothing: "No timestamps yet",
@@ -47,13 +60,23 @@ export const i18n: Record<string, I18nMessages> = {
     geniusSearchTitle: "Search by song title",
     geniusSearchArtist: "Search by song artist",
     geniusSearchButtonTitle: "Genius Search",
+    chatgptPrompt: [
+      "Please generate a completed LRC file with all timestamps aligned to the lyrics.",
+      "Insert a half-width space between the time and the lyrics.",
+      "Ensure there are no trailing spaces at the end of each line.",
+      "Ignore elements such as [Verse 1], [Chorus], or any titles at the beginning.",
+      "After outputting the LRC file, also provide the plain lyrics with those elements removed.",
+      "If the line counts do not match or if there are any empty lines, please let me know.",
+    ],
+    chatgptPromptButtonTitle: "ChatGPT Prompt",
+    closeButtonTitle: "Close",
   },
   "zh-CN": {
-    add: "添加 (1)",
-    undo: "撤销 (2)",
-    space: "空格 (3)",
-    copy: "复制 (4)",
-    clear: "删除 (5)",
+    add: "添加",
+    undo: "撤销",
+    space: "空格",
+    copy: "复制",
+    clear: "删除",
     noticeReset: "检测到下一首 {}秒后重置…",
     copied: "已复制！",
     nothing: "没有时间戳",
@@ -63,13 +86,23 @@ export const i18n: Record<string, I18nMessages> = {
     geniusSearchTitle: "按标题搜索",
     geniusSearchArtist: "按歌手搜索",
     geniusSearchButtonTitle: "Genius 搜索",
+    chatgptPrompt: [
+      "请生成一个完整的 LRC 文件，并使所有时间与歌词对应。",
+      "在时间和歌词之间插入半角空格。",
+      "确保每行末尾没有空格字符。",
+      "忽略 [Verse 1]、[Chorus] 或开头的标题等元素。",
+      "在输出 LRC 文件后，请再输出删除这些元素的纯歌词。",
+      "如果行数不匹配或有空行，请告诉我。",
+    ],
+    chatgptPromptButtonTitle: "ChatGPT 提示词",
+    closeButtonTitle: "关闭",
   },
   ko: {
-    add: "추가 (1)",
-    undo: "뒤로 (2)",
-    space: "공백 (3)",
-    copy: "복사 (4)",
-    clear: "삭제 (5)",
+    add: "추가",
+    undo: "뒤로",
+    space: "공백",
+    copy: "복사",
+    clear: "삭제",
     noticeReset: "다음 곡 감지… {}초 후 초기화",
     copied: "복사했습니다!",
     nothing: "타임스탬프가 없습니다",
@@ -79,6 +112,16 @@ export const i18n: Record<string, I18nMessages> = {
     geniusSearchTitle: "제목으로 검색",
     geniusSearchArtist: "아티스트로 검색",
     geniusSearchButtonTitle: "Genius 검색",
+    chatgptPrompt: [
+      "모든 시간에 가사를 맞춘 완성된 LRC 파일을 만들어 주세요.",
+      "시간과 가사 사이에는 반각 공백을 넣어 주세요.",
+      "각 줄 끝에는 공백 문자가 없도록 해 주세요.",
+      "[Verse 1], [Chorus] 또는 제목과 같은 요소는 무시해 주세요.",
+      "LRC 파일을 출력한 후, 이러한 요소를 제거한 일반 가사도 함께 출력해 주세요.",
+      "줄 수가 맞지 않거나 빈 줄이 있으면 알려 주세요.",
+    ],
+    chatgptPromptButtonTitle: "ChatGPT 프롬프트",
+    closeButtonTitle: "닫다",
   },
 };
 

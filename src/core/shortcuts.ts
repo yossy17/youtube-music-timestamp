@@ -3,6 +3,7 @@ import { TimestampActions } from "./actions";
 import { ResetManager } from "./reset";
 import { Storage } from "../storage";
 import { geniusSearch } from "./genius";
+import { openChatgpt } from "./chatgpt";
 
 // キーバインド定義
 const KEY_BINDINGS: Record<string, string> = {
@@ -13,8 +14,9 @@ const KEY_BINDINGS: Record<string, string> = {
   "5": "clear",
   "6": "toggleAutoReset",
   "7": "geniusSearchBoth",
-  "8": "geniusSearchTitle",
-  "9": "geniusSearchArtist",
+  "8": "openChatgpt",
+  "9": "openLrcLib",
+  "0": "panelToggle",
 };
 
 export class ShortcutManager {
@@ -75,20 +77,21 @@ export class ShortcutManager {
         case "geniusSearchBoth":
           geniusSearch("both");
           break;
-        case "geniusSearchTitle":
-          geniusSearch("title");
+        case "openChatgpt":
+          openChatgpt();
           break;
-        case "geniusSearchArtist":
-          geniusSearch("artist");
+        case "openLrcLib": {
+          const link = document.querySelector<HTMLAnchorElement>(
+            'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]'
+          );
+          if (link?.href) {
+            window.open(link.href, "_blank", "noopener,noreferrer");
+          }
           break;
-      }
-    });
-
-    // Alt+z でパネル表示切り替え
-    document.addEventListener("keydown", (e) => {
-      if (e.altKey && e.key.toLowerCase() === "z") {
-        e.preventDefault();
-        this.panel.toggleVisibility();
+        }
+        case "panelToggle":
+          this.panel.toggleVisibility();
+          break;
       }
     });
   }
