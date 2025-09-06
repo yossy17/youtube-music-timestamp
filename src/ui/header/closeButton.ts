@@ -4,7 +4,7 @@ export const createCloseButton = (onClose: () => void): HTMLElement => {
   // Close ボタン
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
-  closeBtn.title = messages.closeButtonTitle;
+  closeBtn.title = `${messages.closeButtonTitle} (0)`;
   closeBtn.textContent = "×";
   closeBtn.style.cssText = `
     width: 28px;

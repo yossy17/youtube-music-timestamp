@@ -15,6 +15,8 @@ const KEY_BINDINGS: Record<string, string> = {
   "6": "toggleAutoReset",
   "7": "geniusSearchBoth",
   "8": "openChatgpt",
+  "9": "openLrcLib",
+  "0": "panelToggle",
 };
 
 export class ShortcutManager {
@@ -78,14 +80,18 @@ export class ShortcutManager {
         case "openChatgpt":
           openChatgpt();
           break;
-      }
-    });
-
-    // Alt+z でパネル表示切り替え
-    document.addEventListener("keydown", (e) => {
-      if (e.altKey && e.key.toLowerCase() === "z") {
-        e.preventDefault();
-        this.panel.toggleVisibility();
+        case "openLrcLib": {
+          const link = document.querySelector<HTMLAnchorElement>(
+            'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]'
+          );
+          if (link?.href) {
+            window.open(link.href, "_blank", "noopener,noreferrer");
+          }
+          break;
+        }
+        case "panelToggle":
+          this.panel.toggleVisibility();
+          break;
       }
     });
   }
