@@ -13,6 +13,7 @@ export class ResetManager {
     this.actions = actions;
     this.initTitle();
     this.setupTrackDetection();
+    this.setupManualResetDetection();
   }
 
   private getTitleText(): string | null {
@@ -71,7 +72,36 @@ export class ResetManager {
         clearInterval(this.countdownInterval);
         this.countdownInterval = null;
       }
+      // タイムアウト後に通知をクリア
+      this.actions.clearNotice();
     }, 5000);
+  }
+
+  // 手動リセットの検出
+  private setupManualResetDetection(): void {
+    // TimestampActionsの状態変化を監視
+    let previousTimestampCount = this.actions.hasTimestamps()
+      ? this.actions.getTimestamps().length
+      : 0;
+
+    const checkManualReset = () => {
+      const currentTimestampCount = this.actions.hasTimestamps()
+        ? this.actions.getTimestamps().length
+        : 0;
+
+      // カウントダウン中にタイムスタンプが手動で削除された場合
+      if (
+        this.pendingReset &&
+        previousTimestampCount > 0 &&
+        currentTimestampCount === 0
+      ) {
+        this.cancelPendingReset();
+      }
+
+      previousTimestampCount = currentTimestampCount;
+    };
+
+    setInterval(checkManualReset, 100);
   }
 
   // pendingResetの状態を取得
