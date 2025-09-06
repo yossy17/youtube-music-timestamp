@@ -25,7 +25,12 @@ export class Panel {
 
     this.footer = createFooter();
 
-    this.element.append(header, buttons, this.listBox, this.footer);
+    // 閉じるボタンを作成
+    const closeBtn = this.createCloseButton(() => {
+      this.setVisible(false);
+    });
+
+    this.element.append(header, buttons, this.listBox, this.footer, closeBtn);
 
     // ドラッグイベントを設定
     this.setupDragEvents();
@@ -94,6 +99,51 @@ export class Panel {
       color: rgb(200, 200, 210);
     `;
     return listBox;
+  }
+
+  // 閉じるボタン
+  private createCloseButton(onClose: () => void): HTMLButtonElement {
+    const closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.textContent = "×";
+
+    closeBtn.style.cssText = `
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.06);
+    text-align: center;
+    border: 1px solid transparent;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%;
+    font-size: 24px;
+    backdrop-filter: blur(10px);
+    box-shadow:
+      rgba(0, 0, 0, 0.3) 0px 4px 12px,
+      rgba(255, 255, 255, 0.03) 0px 1px 0px inset;
+    cursor: pointer;
+    color: #fff;
+  `;
+
+    closeBtn.addEventListener("mouseenter", () => {
+      closeBtn.style.background = "rgba(255, 255, 255, 0.12)";
+      closeBtn.style.borderColor = "rgba(255, 255, 255, 0.2)";
+    });
+
+    closeBtn.addEventListener("mouseleave", () => {
+      closeBtn.style.background = "rgba(255, 255, 255, 0.06)";
+      closeBtn.style.borderColor = "transparent";
+    });
+
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onClose();
+    });
+
+    return closeBtn;
   }
 
   private handleDragStart(e: MouseEvent): void {
