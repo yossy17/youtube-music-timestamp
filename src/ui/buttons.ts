@@ -8,7 +8,7 @@ export interface ButtonActions {
   onClear: () => void;
 }
 
-const makeBtn = (text: string, shortcut: string): HTMLButtonElement => {
+const makeButton = (text: string, shortcut: string): HTMLButtonElement => {
   const button = document.createElement("button");
   button.textContent = `${text} ${shortcut}`;
 
@@ -49,18 +49,18 @@ export const createButtons = (actions: ButtonActions): HTMLElement => {
     margin-bottom: 8px;
   `;
 
-  const addBtn = makeBtn(messages.add, "(1)");
-  const undoBtn = makeBtn(messages.undo, "(2)");
-  const spaceBtn = makeBtn(messages.space, "(3)");
-  const copyBtn = makeBtn(messages.copy, "(4)");
-  const clearBtn = makeBtn(messages.clear, "(5)");
+  const addButton = makeButton(messages.add, "(1)");
+  const undoButton = makeButton(messages.undo, "(2)");
+  const spaceButton = makeButton(messages.space, "(3)");
+  const copyButton = makeButton(messages.copy, "(4)");
+  const clearButton = makeButton(messages.clear, "(5)");
 
-  addBtn.addEventListener("click", actions.onAdd);
-  undoBtn.addEventListener("click", actions.onUndo);
-  spaceBtn.addEventListener("click", actions.onSpace);
-  copyBtn.addEventListener("click", actions.onCopy);
-  clearBtn.addEventListener("click", actions.onClear);
+  addButton.addEventListener("click", actions.onAdd);
+  undoButton.addEventListener("click", actions.onUndo);
+  spaceButton.addEventListener("click", actions.onSpace);
+  copyButton.addEventListener("click", actions.onCopy);
+  clearButton.addEventListener("click", actions.onClear);
 
-  buttons.append(addBtn, undoBtn, spaceBtn, copyBtn, clearBtn);
+  buttons.append(addButton, undoButton, spaceButton, copyButton, clearButton);
   return buttons;
 };

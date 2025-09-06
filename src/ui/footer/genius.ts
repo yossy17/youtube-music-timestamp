@@ -5,7 +5,7 @@ export const createGeniusButton = () => {
   // Geniusボタン
   const geniusButton = document.createElement("button");
   geniusButton.type = "button";
-  geniusButton.title = messages.geniusSearchButtonTitle;
+  geniusButton.title = `${messages.geniusSearchButtonTitle} (7)`;
   geniusButton.setAttribute("aria-haspopup", "menu");
   geniusButton.setAttribute("aria-expanded", "false");
   geniusButton.style.cssText = `
@@ -117,13 +117,13 @@ export const createGeniusButton = () => {
   };
 
   geniusMenu.appendChild(
-    createGeniusMenuItem(`${messages.geniusSearchBoth} (7)`, "both", "🎶")
+    createGeniusMenuItem(`${messages.geniusSearchBoth}`, "both", "🎶")
   );
   geniusMenu.appendChild(
-    createGeniusMenuItem(`${messages.geniusSearchTitle} (8)`, "title", "🎵")
+    createGeniusMenuItem(`${messages.geniusSearchTitle}`, "title", "🎵")
   );
   geniusMenu.appendChild(
-    createGeniusMenuItem(`${messages.geniusSearchArtist} (9)`, "artist", "👤")
+    createGeniusMenuItem(`${messages.geniusSearchArtist}`, "artist", "👤")
   );
   // footer.appendChild(geniusMenu);
 
