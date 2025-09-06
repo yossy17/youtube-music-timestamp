@@ -2,6 +2,8 @@ import { Panel } from "./ui/panel";
 import { TimestampActions } from "./core/actions";
 import { ResetManager } from "./core/reset";
 import { ShortcutManager } from "./core/shortcuts";
+import { openPanel } from "./core/openPanel";
+import { createOpenPanelButton } from "./ui/openPanelButton";
 // import "./addon";
 
 (() => {
@@ -36,6 +38,10 @@ import { ShortcutManager } from "./core/shortcuts";
 
     const shortcuts = new ShortcutManager(panel, actions, resetManager);
     shortcuts.setupMenuCommand();
+
+    // パネル開閉ボタン
+    const panelController = new openPanel(panel);
+    createOpenPanelButton(panelController);
 
     if (import.meta.env.MODE === "development") {
       console.log("✅ UserScript initialization complete!");
