@@ -6,11 +6,17 @@ export class TimestampActions {
   private timestamps: string[] = [];
   private panel: Panel;
   private noticeTimeout: number | null = null;
+  private resetManager: any = null;
 
   constructor(panel: Panel) {
     this.panel = panel;
     this.timestamps = Storage.loadTimestamps();
     this.updateDisplay();
+  }
+
+  // ResetManagerの参照を設定
+  setResetManager(resetManager: any): void {
+    this.resetManager = resetManager;
   }
 
   private formatTime(seconds: number): string {
@@ -78,6 +84,11 @@ export class TimestampActions {
     if (this.timestamps.length) {
       this.timestamps.pop();
       this.updateDisplay();
+
+      // 手動操作でカウントダウン中なら取り消し
+      if (this.resetManager?.isPendingReset()) {
+        this.resetManager.cancelReset();
+      }
     }
   };
 
@@ -104,6 +115,11 @@ export class TimestampActions {
   };
 
   clear = (): void => {
+    // 手動リセット時にカウントダウンをキャンセル
+    if (this.resetManager?.isPendingReset()) {
+      this.resetManager.cancelReset();
+    }
+
     this.timestamps = [];
     this.updateDisplay();
     this.clearNotice();
