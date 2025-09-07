@@ -2,10 +2,11 @@ export const createNoticeWrapper = () => {
   // Noticeラップ
   const noticeWrapper = document.createElement("div");
   noticeWrapper.style.cssText = `
-    margin-inline: 8px;
+    margin-left: 8px;
     flex: 1;
-    text-align: center;
+    text-align: left;
     min-height: 1em;
+    text-align: center;
   `;
 
   // Noticeメッセージ

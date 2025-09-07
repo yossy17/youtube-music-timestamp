@@ -1,5 +1,5 @@
-import { createChatgptButton } from "./header/chatgptButton";
 import { createTitle } from "./header/title";
+import { createMediaButton } from "./header/mediaButton";
 import { createCloseButton } from "./header/closeButton";
 
 export const createHeader = (
@@ -12,18 +12,17 @@ export const createHeader = (
     align-items: center;
     justify-content: space-between;
     padding-inline: 8px;
-    cursor: grab;
     position: relative;
     padding-block: 12px;
   `;
 
-  const chatgpt = createChatgptButton();
   const title = createTitle();
+  const media = createMediaButton();
   const close = createCloseButton(onClose);
 
-  header.append(chatgpt, title, close);
+  header.append(title, media, close);
 
-  header.addEventListener("mousedown", onDragStart);
+  title.addEventListener("mousedown", onDragStart);
 
   return header;
 };
