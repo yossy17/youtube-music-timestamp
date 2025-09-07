@@ -6,6 +6,7 @@ export const createTitle = (): HTMLElement => {
     align-items: center;
     justify-content: center;
     gap: 4px;
+    cursor: grab;
   `;
 
   // タイトルアイコン
