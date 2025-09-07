@@ -62,7 +62,7 @@ export const createGeniusButton = () => {
     flex-direction: column;
     gap: 8px;
     bottom: 40px;
-    left: -50px;
+    right: -50px;
     z-index: 100;
     padding: 8px;
     background: rgba(10, 10, 15, 0.85);
