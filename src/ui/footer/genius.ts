@@ -33,7 +33,7 @@ export const createGeniusButton = () => {
   const geniusIcon = document.createElement("img");
   geniusIcon.alt = "Genius";
   geniusIcon.src =
-    "https://assets.genius.com/images/apple-touch-icon.png?1757013544";
+    "https://yossy17.github.io/youtube-music-timestamp/images/assets/genius.png";
   geniusIcon.style.cssText = `
     width: 100%;
     height: 100%;
