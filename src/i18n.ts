@@ -1,7 +1,7 @@
 export interface I18nMessages {
   add: string;
-  undo: string;
   space: string;
+  undo: string;
   copy: string;
   clear: string;
   noticeReset: string;
@@ -21,8 +21,8 @@ export interface I18nMessages {
 export const i18n: Record<string, I18nMessages> = {
   ja: {
     add: "追加",
-    undo: "戻る",
     space: "スペース",
+    undo: "戻る",
     copy: "コピー",
     clear: "削除",
     noticeReset: "次の曲を検出 {}秒後にリセットします…",
@@ -41,15 +41,15 @@ export const i18n: Record<string, I18nMessages> = {
       "[Verse 1]や[Chorus]や最初にタイトルなどの要素がある場合、その要素は無視してください。",
       "歌の構成(例: サビやAメロなど)で改行されている場所は、そのまま改行して出力してください。",
       "LRCファイルを出した後、[Verse 1]や[Chorus]や最初にタイトルなどの要素を消したプレーンな歌詞を出してください。",
-      "もし行数が合わないやどちらかが空の行があった場合教えてください。",
+      "もし行数が合わないやどちらかが空の行があった場合ファイルの出力はせず､教えてください。",
     ],
     chatgptPromptButtonTitle: "ChatGPT プロンプト",
     closeButtonTitle: "閉じる",
   },
   en: {
     add: "Add",
-    undo: "Undo",
     space: "Space",
+    undo: "Undo",
     copy: "Copy",
     clear: "Clear",
     noticeReset: "Next track detected… resetting in {}s",
@@ -68,15 +68,15 @@ export const i18n: Record<string, I18nMessages> = {
       "Ignore elements such as [Verse 1], [Chorus], or any titles at the beginning.",
       "Preserve line breaks where the song structure (such as verses or choruses) is separated.",
       "After outputting the LRC file, also provide the plain lyrics with those elements removed.",
-      "If the line counts do not match or if there are any empty lines, please let me know.",
+      "If the number of lines does not match or if there are any empty lines, please let me know without outputting the file.",
     ],
     chatgptPromptButtonTitle: "ChatGPT Prompt",
     closeButtonTitle: "Close",
   },
   "zh-CN": {
     add: "添加",
-    undo: "撤销",
     space: "空格",
+    undo: "撤销",
     copy: "复制",
     clear: "删除",
     noticeReset: "检测到下一首 {}秒后重置…",
@@ -95,15 +95,15 @@ export const i18n: Record<string, I18nMessages> = {
       "忽略 [Verse 1]、[Chorus] 或开头的标题等元素。",
       "在歌曲结构(如段落或副歌)换行的地方保持换行。",
       "在输出 LRC 文件后，请再输出删除这些元素的纯歌词。",
-      "如果行数不匹配或有空行，请告诉我。",
+      "如果行数不匹配或存在空行，请不要输出文件，并告诉我。",
     ],
     chatgptPromptButtonTitle: "ChatGPT 提示词",
     closeButtonTitle: "关闭",
   },
   ko: {
     add: "추가",
-    undo: "뒤로",
     space: "공백",
+    undo: "뒤로",
     copy: "복사",
     clear: "삭제",
     noticeReset: "다음 곡 감지… {}초 후 초기화",
@@ -122,7 +122,7 @@ export const i18n: Record<string, I18nMessages> = {
       "[Verse 1], [Chorus] 또는 제목과 같은 요소는 무시해 주세요.",
       "노래 구조(예: 절, 후렴)로 줄바꿈된 곳은 그대로 줄바꿈해 주세요.",
       "LRC 파일을 출력한 후, 이러한 요소를 제거한 일반 가사도 함께 출력해 주세요.",
-      "줄 수가 맞지 않거나 빈 줄이 있으면 알려 주세요.",
+      "줄 수가 맞지 않거나 빈 줄이 있으면 파일을 출력하지 말고 알려 주세요.",
     ],
     chatgptPromptButtonTitle: "ChatGPT 프롬프트",
     closeButtonTitle: "닫다",

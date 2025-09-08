@@ -35,19 +35,13 @@ export const createFooter = (
     justify-content: center;
   `;
 
-  const chatgpt = createChatgptButton();
   const notice = createNoticeWrapper();
   const genius = createGeniusButton();
+  const chatgpt = createChatgptButton();
   const indicator = createIndicatorButton(onToggleAutoReset);
 
-  mediaButtonWrapper.append(chatgpt, genius.geniusButton);
-  footer.append(
-    notice,
-
-    mediaButtonWrapper,
-    indicator,
-    genius.geniusMenu
-  );
+  mediaButtonWrapper.append(genius.geniusButton, chatgpt);
+  footer.append(notice, mediaButtonWrapper, indicator, genius.geniusMenu);
 
   return Object.assign(footer, {
     _notice: notice,

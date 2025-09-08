@@ -5,7 +5,7 @@ export const createChatgptButton = (): HTMLElement => {
   // ChatGPT ボタン
   const chatgptBtn = document.createElement("button");
   chatgptBtn.type = "button";
-  chatgptBtn.title = `${messages.chatgptPromptButtonTitle} (8)`;
+  chatgptBtn.title = `${messages.chatgptPromptButtonTitle} (5)`;
   chatgptBtn.style.cssText = `
     width: 24px;
     height: 24px;

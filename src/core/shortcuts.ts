@@ -8,14 +8,14 @@ import { openChatgpt } from "./chatgpt";
 // キーバインド定義
 const KEY_BINDINGS: Record<string, string> = {
   "1": "add",
-  "2": "undo",
-  "3": "space",
-  "4": "copy",
-  "5": "clear",
-  "6": "toggleAutoReset",
-  "7": "geniusSearchBoth",
-  "8": "openChatgpt",
-  "9": "openLrcLib",
+  "2": "space",
+  "3": "undo",
+  "4": "geniusSearchBoth",
+  "5": "openChatgpt",
+  "6": "openLrcLib",
+  "7": "copy",
+  "8": "clear",
+  "9": "toggleAutoReset",
   "0": "panelToggle",
 };
 
@@ -59,11 +59,11 @@ export class ShortcutManager {
         case "add":
           this.actions.add();
           break;
-        case "undo":
-          this.actions.undo();
-          break;
         case "space":
           this.actions.addSpace();
+          break;
+        case "undo":
+          this.actions.undo();
           break;
         case "copy":
           this.actions.copy();
@@ -81,11 +81,21 @@ export class ShortcutManager {
           openChatgpt();
           break;
         case "openLrcLib": {
-          const link = document.querySelector<HTMLAnchorElement>(
-            'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]'
-          );
-          if (link?.href) {
-            window.open(link.href, "_blank", "noopener,noreferrer");
+          const linkSelector =
+            'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]';
+          const buttonSelector = "button.blyrics-add-lyrics-button";
+
+          const openLink =
+            document.querySelector<HTMLAnchorElement>(linkSelector);
+
+          if (openLink) {
+            window.open(openLink.href, "_blank", "noopener,noreferrer");
+          } else {
+            const openButton =
+              document.querySelector<HTMLButtonElement>(buttonSelector);
+            if (openButton) {
+              openButton.click();
+            }
           }
           break;
         }
