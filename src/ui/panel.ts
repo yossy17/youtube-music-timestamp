@@ -55,7 +55,7 @@ export class Panel {
       ${
         savedPosition
           ? `top:${savedPosition.top}px;left:${savedPosition.left}px;`
-          : `bottom:100px;right:40px;`
+          : `top:400px;left:400px;`
       }
       z-index: calc(infinity);
       display: none;

@@ -53,7 +53,7 @@ export class Storage {
 
   // AutoReset設定の保存・読み込み
   static getAutoResetEnabled(): boolean {
-    return GM_getValue(GM_AUTORESET_KEY, true);
+    return GM_getValue(GM_AUTORESET_KEY, false);
   }
 
   static setAutoResetEnabled(enabled: boolean): void {
