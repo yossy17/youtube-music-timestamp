@@ -17,7 +17,11 @@ const KEY_BINDINGS: Record<string, string> = {
   "8": "clear",
   "9": "toggleAutoReset",
   "0": "panelToggle",
+  w: "seekRewind5s",
+  e: "seekForward5s",
 };
+
+const SEEK_INTERVAL = 5;
 
 export class ShortcutManager {
   private panel: Panel;
@@ -102,8 +106,21 @@ export class ShortcutManager {
         case "panelToggle":
           this.panel.toggleVisibility();
           break;
+        case "seekRewind5s":
+          this.seek(-SEEK_INTERVAL);
+          break;
+        case "seekForward5s":
+          this.seek(SEEK_INTERVAL);
+          break;
       }
     });
+  }
+
+  private seek(seconds: number): void {
+    const video = document.querySelector("video");
+    if (video) {
+      video.currentTime = Math.max(0, video.currentTime + seconds);
+    }
   }
 
   private toggleAutoReset(): void {
