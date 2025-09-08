@@ -44,8 +44,6 @@ export function createOpenPanelButton(controller: openPanel): HTMLElement {
 
   if (controls) {
     controls.appendChild(openYtmTsPanelContainer);
-  } else {
-    console.warn("⚠️ middle-controls-buttons が見つかりませんでした");
   }
 
   return openYtmTsPanel;
