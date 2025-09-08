@@ -5,7 +5,7 @@ export const createIndicatorButton = (
   onToggleAutoReset?: (enabled: boolean) => void
 ): HTMLElement & { _circle: HTMLElement; _update: (e: boolean) => void } => {
   const indicatorTrack = document.createElement("div");
-  indicatorTrack.title = `${messages.toggleAutoResetButtonTitle} (6)`;
+  indicatorTrack.title = `${messages.toggleAutoResetButtonTitle} (9)`;
   indicatorTrack.style.cssText = `
     position: relative;
     width: 48px;

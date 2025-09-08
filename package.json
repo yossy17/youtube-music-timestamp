@@ -1,12 +1,12 @@
 {
   "name": "youtube-music-timestamp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Capture and manage timestamps in YouTube Music",
   "keywords": [
     "userscript"
   ],
   "author": "Yos_sy",
-  "license": "MIT",
+  "license": "GPL",
   "type": "module",
   "scripts": {
     "dev": "node scripts/dev-server.ts",

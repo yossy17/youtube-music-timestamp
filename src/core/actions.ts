@@ -80,6 +80,11 @@ export class TimestampActions {
     this.updateDisplay();
   };
 
+  addSpace = (): void => {
+    this.timestamps.push("");
+    this.updateDisplay();
+  };
+
   undo = (): void => {
     if (this.timestamps.length) {
       this.timestamps.pop();
@@ -90,11 +95,6 @@ export class TimestampActions {
         this.resetManager.cancelReset();
       }
     }
-  };
-
-  addSpace = (): void => {
-    this.timestamps.push("");
-    this.updateDisplay();
   };
 
   copy = (): void => {

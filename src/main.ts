@@ -19,8 +19,8 @@ import { createOpenPanelButton } from "./ui/openPanelButton";
 
   const createActionHandlers = () => ({
     onAdd: () => actions.add(),
-    onUndo: () => actions.undo(),
     onSpace: () => actions.addSpace(),
+    onUndo: () => actions.undo(),
     onCopy: () => actions.copy(),
     onClear: () => actions.clear(),
   });

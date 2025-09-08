@@ -22,6 +22,15 @@ function buildMeta(metadata, isDev = false) {
           ko: metadata.name.ko + " (개발판)",
         }
       : metadata.name,
+    updateURL:
+      "https://github.com/yossy17/" +
+      pkg.name +
+      "/raw/master/dist/userscript.user.js",
+    downloadURL:
+      "https://github.com/yossy17/" +
+      pkg.name +
+      "/raw/master/dist/userscript.user.js",
+    supportURL: "https://github.com/yossy17/" + pkg.name,
   };
 
   let metaBlock = "// ==UserScript==\n";
@@ -81,7 +90,7 @@ export default defineConfig(({ mode }) => {
     build: {
       emptyOutDir: true,
       minify: false,
-      sourcemap: isDev,
+      sourcemap: true,
       lib: {
         entry: path.resolve(__dirname, "src/main.ts"),
         formats: ["iife"],

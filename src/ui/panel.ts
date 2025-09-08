@@ -1,12 +1,12 @@
 import { Storage } from "../storage";
 import { createHeader } from "./header";
-import { createButtons, ButtonActions } from "./buttons";
-import { messages } from "../i18n";
+import { createContent, ButtonActions } from "./content";
 import { createFooter } from "./footer";
 
 export class Panel {
   private element: HTMLElement;
   private listBox: HTMLElement;
+  private updateListBox: (listBox: HTMLElement, timestamps: string[]) => void;
   private footer: HTMLElement & {
     _notice: any;
     _updateIndicator: (enabled: boolean) => void;
@@ -17,17 +17,19 @@ export class Panel {
 
   constructor(actions: ButtonActions) {
     this.element = this.createElement();
-    this.listBox = this.createListBox();
 
     // パネルを構成
     const header = createHeader(this.handleDragStart.bind(this), () =>
       this.setVisible(false)
     );
-    const buttons = createButtons(actions);
+
+    const main = createContent(actions);
+    this.listBox = main.listBox;
+    this.updateListBox = main.updateListBox;
 
     this.footer = createFooter();
 
-    this.element.append(header, buttons, this.listBox, this.footer);
+    this.element.append(header, main.element, this.footer);
 
     // ドラッグイベントを設定
     this.setupDragEvents();
@@ -53,7 +55,7 @@ export class Panel {
       ${
         savedPosition
           ? `top:${savedPosition.top}px;left:${savedPosition.left}px;`
-          : `bottom:100px;right:40px;`
+          : `top:400px;left:400px;`
       }
       z-index: calc(infinity);
       display: none;
@@ -74,28 +76,6 @@ export class Panel {
     `;
 
     return panel;
-  }
-
-  private createListBox(): HTMLElement {
-    const listBox = document.createElement("div");
-    listBox.style.cssText = `
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 12px;
-      height: 140px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      line-height: 1.5;
-      user-select: text;
-      backdrop-filter: blur(8px);
-      box-shadow:
-        rgba(0, 0, 0, 0.4) 0px 4px 12px inset,
-        rgba(255, 255, 255, 0.02) 0px 1px 0px;
-      color: rgb(200, 200, 210);
-    `;
-    return listBox;
   }
 
   private handleDragStart(e: MouseEvent): void {
@@ -172,12 +152,7 @@ export class Panel {
   }
 
   updateTimestampList(timestamps: string[]): void {
-    this.listBox.textContent = timestamps.length
-      ? timestamps.join("\n")
-      : messages.nothing;
-
-    // 新しいコンテンツが追加された時に自動スクロール
-    this.listBox.scrollTop = this.listBox.scrollHeight;
+    this.updateListBox(this.listBox, timestamps);
   }
 
   setNotice(message: string): void {
