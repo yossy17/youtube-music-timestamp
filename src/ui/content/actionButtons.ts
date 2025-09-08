@@ -1,4 +1,4 @@
-import { messages } from "../i18n";
+import { messages } from "../../i18n";
 
 export interface ButtonActions {
   onAdd: () => void;
@@ -8,11 +8,14 @@ export interface ButtonActions {
   onClear: () => void;
 }
 
-const makeButton = (text: string, shortcut: string): HTMLButtonElement => {
-  const button = document.createElement("button");
-  button.textContent = `${text} ${shortcut}`;
+const createActionButton = (
+  text: string,
+  shortcut: string
+): HTMLButtonElement => {
+  const actionButton = document.createElement("button");
+  actionButton.textContent = `${text} ${shortcut}`;
 
-  button.style.cssText = `
+  actionButton.style.cssText = `
     flex: 1 1 auto;
     padding: 8px 12px;
     background: rgba(255, 255, 255, 0.06);
@@ -28,19 +31,20 @@ const makeButton = (text: string, shortcut: string): HTMLButtonElement => {
       rgba(0, 0, 0, 0.3) 0px 4px 12px,
       rgba(255, 255, 255, 0.03) 0px 1px 0px inset;
   `;
-  button.addEventListener("mouseenter", () => {
-    button.style.background = "rgba(255, 255, 255, 0.12)";
-    button.style.borderColor = "rgba(255, 255, 255, 0.2)";
+  actionButton.addEventListener("mouseenter", () => {
+    actionButton.style.background = "rgba(255, 255, 255, 0.12)";
+    actionButton.style.borderColor = "rgba(255, 255, 255, 0.2)";
   });
 
-  button.addEventListener("mouseleave", () => {
-    button.style.background = "rgba(255, 255, 255, 0.06)";
-    button.style.borderColor = "transparent";
+  actionButton.addEventListener("mouseleave", () => {
+    actionButton.style.background = "rgba(255, 255, 255, 0.06)";
+    actionButton.style.borderColor = "transparent";
   });
-  return button;
+
+  return actionButton;
 };
 
-export const createButtons = (actions: ButtonActions): HTMLElement => {
+export const createActionButtons = (actions: ButtonActions): HTMLElement => {
   const buttons = document.createElement("div");
   buttons.style.cssText = `
     display: flex;
@@ -49,11 +53,11 @@ export const createButtons = (actions: ButtonActions): HTMLElement => {
     margin-bottom: 8px;
   `;
 
-  const addButton = makeButton(messages.add, "(1)");
-  const spaceButton = makeButton(messages.space, "(2)");
-  const undoButton = makeButton(messages.undo, "(3)");
-  const copyButton = makeButton(messages.copy, "(7)");
-  const clearButton = makeButton(messages.clear, "(8)");
+  const addButton = createActionButton(messages.add, "(1)");
+  const spaceButton = createActionButton(messages.space, "(2)");
+  const undoButton = createActionButton(messages.undo, "(3)");
+  const copyButton = createActionButton(messages.copy, "(7)");
+  const clearButton = createActionButton(messages.clear, "(8)");
 
   addButton.addEventListener("click", actions.onAdd);
   spaceButton.addEventListener("click", actions.onSpace);
