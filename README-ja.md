@@ -7,16 +7,14 @@
   <img src="./images/assets/cover.webp" height="512" alt="Cover">
 </p>
 
-<p align="center">
-  <table>
-    <thead>
-        <tr>
-            <th style="text-align:center"><a href="README.md">English</a></th>
-            <th style="text-align:center">日本語</th>
-        </tr>
-      </thead>
-  </table>
-</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align:center"><a href="README.md">English</a></th>
+          <th style="text-align:center">日本語</th>
+      </tr>
+    </thead>
+</table>
 
 ## 概要
 
@@ -57,7 +55,8 @@
 
 ### ⚙️ 便利なおまけ機能
 
-曲が変わったら自動でタイムスタンプをリセット (オン/オフ切り替え可能)
+曲が変わったら自動でタイムスタンプをリセット (オン/オフ切り替え可能)  
+間違えても安心！ `W` , `E`キーで 5 秒の**ちょうどいい**巻き戻し・早送り
 
 ---
 
@@ -82,6 +81,10 @@
 - ⚙️ **タイムスタンプの自動リセット (パネルかショートカットキーで操作可能)**  
   曲が変わると､5 秒後自動的に保存されているタイムスタンプが削除されます｡デフォルトはオフです｡
 
+- ⌨️ **ちょうどいいプレイバック (ショートカットキーで操作可能)**  
+  `W` , `E`キーを使って、動画の再生位置を調整できます｡  
+  `W` キーを押すと 5 秒巻き戻し、`E` キーを押すと 5 秒早送りします｡
+
 > [!TIP]
 > ChatGPT リンクに飛んだとき､新規ページのテキストボックスになにか入力されていると自動挿入されません｡  
 > 入力内容をすべて消してから再度開き直してください｡
@@ -100,6 +103,8 @@
 | 8   | ⏱️ Timestamp | タイムスタンプをすべて削除                 |
 | 9   | ⚙️ Toggle    | タイムスタンプの自動リセット機能を切り替え |
 | 0   | ⚙️ Toggle    | パネルを開閉                               |
+| W   | ⌨️ Playback  | 5 秒巻き戻し                               |
+| E   | ⌨️ Playback  | 5 秒早送り                                 |
 
 ## 使い方
 
