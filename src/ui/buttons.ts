@@ -2,8 +2,8 @@ import { messages } from "../i18n";
 
 export interface ButtonActions {
   onAdd: () => void;
-  onUndo: () => void;
   onSpace: () => void;
+  onUndo: () => void;
   onCopy: () => void;
   onClear: () => void;
 }
@@ -50,17 +50,17 @@ export const createButtons = (actions: ButtonActions): HTMLElement => {
   `;
 
   const addButton = makeButton(messages.add, "(1)");
-  const undoButton = makeButton(messages.undo, "(2)");
-  const spaceButton = makeButton(messages.space, "(3)");
-  const copyButton = makeButton(messages.copy, "(4)");
-  const clearButton = makeButton(messages.clear, "(5)");
+  const spaceButton = makeButton(messages.space, "(2)");
+  const undoButton = makeButton(messages.undo, "(3)");
+  const copyButton = makeButton(messages.copy, "(7)");
+  const clearButton = makeButton(messages.clear, "(8)");
 
   addButton.addEventListener("click", actions.onAdd);
-  undoButton.addEventListener("click", actions.onUndo);
   spaceButton.addEventListener("click", actions.onSpace);
+  undoButton.addEventListener("click", actions.onUndo);
   copyButton.addEventListener("click", actions.onCopy);
   clearButton.addEventListener("click", actions.onClear);
 
-  buttons.append(addButton, undoButton, spaceButton, copyButton, clearButton);
+  buttons.append(addButton, spaceButton, undoButton, copyButton, clearButton);
   return buttons;
 };

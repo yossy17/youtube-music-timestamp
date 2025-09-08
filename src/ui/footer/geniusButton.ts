@@ -5,7 +5,7 @@ export const createGeniusButton = () => {
   // Geniusボタン
   const geniusButton = document.createElement("button");
   geniusButton.type = "button";
-  geniusButton.title = `${messages.geniusSearchButtonTitle} (7)`;
+  geniusButton.title = `${messages.geniusSearchButtonTitle} (4)`;
   geniusButton.setAttribute("aria-haspopup", "menu");
   geniusButton.setAttribute("aria-expanded", "false");
   geniusButton.style.cssText = `
