@@ -53,7 +53,7 @@ export class Panel {
       ${
         savedPosition
           ? `top:${savedPosition.top}px;left:${savedPosition.left}px;`
-          : `bottom:100px;right:40px;`
+          : `top:400px;left:320px;`
       }
       z-index: calc(infinity);
       display: none;
@@ -143,22 +143,22 @@ export class Panel {
 
     document.addEventListener("mouseup", endDrag);
 
-    // ウィンドウリサイズ時のパネル位置調整
-    window.addEventListener("resize", () => {
-      const left = clamp(
-        this.element.offsetLeft,
-        6,
-        window.innerWidth - this.element.offsetWidth - 6
-      );
-      const top = clamp(
-        this.element.offsetTop,
-        6,
-        window.innerHeight - this.element.offsetHeight - 6
-      );
+    // // ウィンドウリサイズ時のパネル位置調整
+    // window.addEventListener("resize", () => {
+    //   const left = clamp(
+    //     this.element.offsetLeft,
+    //     6,
+    //     window.innerWidth - this.element.offsetWidth - 6
+    //   );
+    //   const top = clamp(
+    //     this.element.offsetTop,
+    //     6,
+    //     window.innerHeight - this.element.offsetHeight - 6
+    //   );
 
-      this.element.style.left = left + "px";
-      this.element.style.top = top + "px";
-    });
+    //   this.element.style.left = left + "px";
+    //   this.element.style.top = top + "px";
+    // });
   }
 
   setVisible(visible: boolean): void {
