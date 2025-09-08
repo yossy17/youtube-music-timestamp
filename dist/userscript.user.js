@@ -7,23 +7,23 @@
 // @description:ja Youtube Musicで.LRCファイルを簡単に作ることができます
 // @description:zh-CN 您可以在 YouTube Music 中轻松添加时间戳，并自动生成“.LRC”文件
 // @description:ko YouTube Music에서 손쉽게 타임스탬프를 추가하고 '.LRC' 파일을 자동으로 생성할 수 있습니다
-// @version 0.3.0
- // @author Yos_sy
- // @match *://music.youtube.com/*
+// @version 0.3.1
+// @author Yos_sy
+// @match *://music.youtube.com/*
 // @namespace http://tampermonkey.net/
- // @icon https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp
- // @grant GM_setClipboard
+// @icon https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp
+// @grant GM_setClipboard
 // @grant GM_registerMenuCommand
 // @grant GM_setValue
 // @grant GM_getValue
 // @grant GM_addStyle
 // @license GPL
- // @updateURL https://github.com/yossy17/youtube-music-timestamp/raw/master/dist/userscript.user.js
- // @downloadURL https://github.com/yossy17/youtube-music-timestamp/raw/master/dist/userscript.user.js
- // @supportURL https://github.com/yossy17/youtube-music-timestamp
- // ==/UserScript==
+// @updateURL https://github.com/yossy17/youtube-music-timestamp/raw/master/dist/userscript.user.js
+// @downloadURL https://github.com/yossy17/youtube-music-timestamp/raw/master/dist/userscript.user.js
+// @supportURL https://github.com/yossy17/youtube-music-timestamp
+// ==/UserScript==
 
-(function() {
+(function () {
   "use strict";
   const GM_POSITION_KEY = "ytm_ts_position";
   const GM_VISIBLE_KEY = "ytm_ts_visible";
@@ -76,7 +76,8 @@
     cursor: grab;
   `;
     const ytmTimestampIcon = document.createElement("img");
-    ytmTimestampIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp";
+    ytmTimestampIcon.src =
+      "https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp";
     ytmTimestampIcon.style.cssText = `
     width: 24px;
     height: 24px;
@@ -109,13 +110,15 @@
     {
       url: "https://github.com/yossy17/youtube-music-timestamp",
       title: "GitHub",
-      imgSrc: "https://yossy17.github.io/youtube-music-timestamp/images/assets/github.webp"
+      imgSrc:
+        "https://yossy17.github.io/youtube-music-timestamp/images/assets/github.webp",
     },
     {
       url: "https://x.com/yos_sy17",
       title: "Twitter",
-      imgSrc: "https://yossy17.github.io/youtube-music-timestamp/images/assets/twitter.webp"
-    }
+      imgSrc:
+        "https://yossy17.github.io/youtube-music-timestamp/images/assets/twitter.webp",
+    },
   ];
   const createMediaButton = () => {
     const mediaButtonWrapper = document.createElement("div");
@@ -199,10 +202,10 @@
         "[Verse 1]や[Chorus]や最初にタイトルなどの要素がある場合、その要素は無視してください。",
         "歌の構成(例: サビやAメロなど)で改行されている場所は、そのまま改行して出力してください。",
         "LRCファイルを出した後、[Verse 1]や[Chorus]や最初にタイトルなどの要素を消したプレーンな歌詞を出してください。",
-        "もし行数が合わないやどちらかが空の行があった場合ファイルの出力はせず､教えてください。"
+        "もし行数が合わないやどちらかが空の行があった場合教えてください。",
       ],
       chatgptPromptButtonTitle: "ChatGPT プロンプト",
-      closeButtonTitle: "閉じる"
+      closeButtonTitle: "閉じる",
     },
     en: {
       add: "Add",
@@ -226,10 +229,10 @@
         "Ignore elements such as [Verse 1], [Chorus], or any titles at the beginning.",
         "Preserve line breaks where the song structure (such as verses or choruses) is separated.",
         "After outputting the LRC file, also provide the plain lyrics with those elements removed.",
-        "If the number of lines does not match or if there are any empty lines, please let me know without outputting the file."
+        "If the number of lines does not match or if there are any empty lines, please let me know.",
       ],
       chatgptPromptButtonTitle: "ChatGPT Prompt",
-      closeButtonTitle: "Close"
+      closeButtonTitle: "Close",
     },
     "zh-CN": {
       add: "添加",
@@ -253,10 +256,10 @@
         "忽略 [Verse 1]、[Chorus] 或开头的标题等元素。",
         "在歌曲结构(如段落或副歌)换行的地方保持换行。",
         "在输出 LRC 文件后，请再输出删除这些元素的纯歌词。",
-        "如果行数不匹配或存在空行，请不要输出文件，并告诉我。"
+        "如果行数不匹配或有空行，请告诉我。",
       ],
       chatgptPromptButtonTitle: "ChatGPT 提示词",
-      closeButtonTitle: "关闭"
+      closeButtonTitle: "关闭",
     },
     ko: {
       add: "추가",
@@ -280,11 +283,11 @@
         "[Verse 1], [Chorus] 또는 제목과 같은 요소는 무시해 주세요.",
         "노래 구조(예: 절, 후렴)로 줄바꿈된 곳은 그대로 줄바꿈해 주세요.",
         "LRC 파일을 출력한 후, 이러한 요소를 제거한 일반 가사도 함께 출력해 주세요.",
-        "줄 수가 맞지 않거나 빈 줄이 있으면 파일을 출력하지 말고 알려 주세요."
+        "줄 수가 맞지 않거나 빈 줄이 있으면 알려 주세요.",
       ],
       chatgptPromptButtonTitle: "ChatGPT 프롬프트",
-      closeButtonTitle: "닫다"
-    }
+      closeButtonTitle: "닫다",
+    },
   };
   function detectLanguage() {
     const browserLang = navigator.language || navigator.userLanguage;
@@ -413,7 +416,9 @@
     return listBox;
   };
   const updateListBox = (listBox, timestamps) => {
-    listBox.textContent = timestamps.length ? timestamps.join("\n") : messages.nothing;
+    listBox.textContent = timestamps.length
+      ? timestamps.join("\n")
+      : messages.nothing;
     listBox.scrollTop = listBox.scrollHeight;
   };
   const createContent = (actions) => {
@@ -429,7 +434,7 @@
     return {
       element: content,
       listBox,
-      updateListBox
+      updateListBox,
     };
   };
   const createNoticeWrapper = () => {
@@ -459,19 +464,23 @@
     };
     return Object.assign(noticeWrapper, {
       setMessage,
-      clear
+      clear,
     });
   };
   function getCurrentTrackInfo() {
     var _a, _b;
-    const titleEl = document.querySelector(
-      ".title.ytmusic-player-bar"
-    );
+    const titleEl = document.querySelector(".title.ytmusic-player-bar");
     const artistEl = document.querySelector(
       "yt-formatted-string.byline.ytmusic-player-bar > a[href^='channel/']"
     );
-    const title = ((_a = titleEl == null ? void 0 : titleEl.textContent) == null ? void 0 : _a.trim()) ?? "";
-    const artist = ((_b = artistEl == null ? void 0 : artistEl.textContent) == null ? void 0 : _b.trim()) ?? "";
+    const title =
+      ((_a = titleEl == null ? void 0 : titleEl.textContent) == null
+        ? void 0
+        : _a.trim()) ?? "";
+    const artist =
+      ((_b = artistEl == null ? void 0 : artistEl.textContent) == null
+        ? void 0
+        : _b.trim()) ?? "";
     return { title, artist };
   }
   function geniusSearch(mode = "both") {
@@ -513,7 +522,8 @@
     });
     const geniusIcon = document.createElement("img");
     geniusIcon.alt = "Genius";
-    geniusIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/assets/genius.webp";
+    geniusIcon.src =
+      "https://yossy17.github.io/youtube-music-timestamp/images/assets/genius.webp";
     geniusIcon.style.cssText = `
     width: 100%;
     height: 100%;
@@ -626,15 +636,20 @@
   };
   const openChatgpt = () => {
     const timestampsArr = Storage.loadTimestamps();
-    const timestamps = timestampsArr.filter((item) => item != null).map(String).join("\n");
+    const timestamps = timestampsArr
+      .filter((item) => item != null)
+      .map(String)
+      .join("\n");
     const promptLines = [
-      ...Array.isArray(messages.chatgptPrompt) ? messages.chatgptPrompt : [messages.chatgptPrompt],
+      ...(Array.isArray(messages.chatgptPrompt)
+        ? messages.chatgptPrompt
+        : [messages.chatgptPrompt]),
       "---",
       "Timestamp",
       timestamps,
       "---",
       "Lyrics",
-      ""
+      "",
     ];
     const prompt = promptLines.join("\n").trimEnd() + "\n";
     const url = `https://chat.openai.com/?q=${encodeURIComponent(prompt)}`;
@@ -664,7 +679,8 @@
     });
     const chatgptIcon = document.createElement("img");
     chatgptIcon.alt = "ChatGPT";
-    chatgptIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/assets/chatgpt.webp";
+    chatgptIcon.src =
+      "https://yossy17.github.io/youtube-music-timestamp/images/assets/chatgpt.webp";
     chatgptIcon.style.cssText = `
     width: 100%;
     height: 100%;
@@ -717,10 +733,18 @@
     transition: background-color 0.3s;
   `;
     const updateIndicator = (enabled2) => {
-      indicatorTrack.style.background = enabled2 ? "rgb(255, 0, 51)" : "rgb(55, 65, 81)";
-      indicatorTrack.style.boxShadow = enabled2 ? "rgba(16, 185, 129, 0.3) 0px 7.5px 11.25px -2.25px" : "rgba(55, 65, 81, 0.2) 0px 7.5px 11.25px -2.25px";
-      indicatorCircle.style.transform = enabled2 ? "translateX(24px)" : "translateX(3px)";
-      indicatorDot.style.background = enabled2 ? "rgb(255, 0, 51)" : "rgb(55, 65, 81)";
+      indicatorTrack.style.background = enabled2
+        ? "rgb(255, 0, 51)"
+        : "rgb(55, 65, 81)";
+      indicatorTrack.style.boxShadow = enabled2
+        ? "rgba(16, 185, 129, 0.3) 0px 7.5px 11.25px -2.25px"
+        : "rgba(55, 65, 81, 0.2) 0px 7.5px 11.25px -2.25px";
+      indicatorCircle.style.transform = enabled2
+        ? "translateX(24px)"
+        : "translateX(3px)";
+      indicatorDot.style.background = enabled2
+        ? "rgb(255, 0, 51)"
+        : "rgb(55, 65, 81)";
     };
     let enabled = Storage.getAutoResetEnabled();
     updateIndicator(enabled);
@@ -733,7 +757,7 @@
     indicatorTrack.appendChild(indicatorCircle);
     return Object.assign(indicatorTrack, {
       _circle: indicatorCircle,
-      _update: updateIndicator
+      _update: updateIndicator,
     });
   };
   const createFooter = (onToggleAutoReset) => {
@@ -765,7 +789,7 @@
     return Object.assign(footer, {
       _notice: notice,
       _indicator: indicator._circle,
-      _updateIndicator: indicator._update
+      _updateIndicator: indicator._update,
     });
   };
   class Panel {
@@ -774,9 +798,8 @@
       this.dx = 0;
       this.dy = 0;
       this.element = this.createElement();
-      const header = createHeader(
-        this.handleDragStart.bind(this),
-        () => this.setVisible(false)
+      const header = createHeader(this.handleDragStart.bind(this), () =>
+        this.setVisible(false)
       );
       const main = createContent(actions);
       this.listBox = main.listBox;
@@ -790,13 +813,19 @@
     createElement() {
       var _a;
       const EXISTING_ID = "ytm-ts";
-      (_a = document.getElementById(EXISTING_ID)) == null ? void 0 : _a.remove();
+      (_a = document.getElementById(EXISTING_ID)) == null
+        ? void 0
+        : _a.remove();
       const panel = document.createElement("div");
       panel.id = EXISTING_ID;
       const savedPosition = Storage.getPosition();
       panel.style.cssText = `
       position: fixed;
-      ${savedPosition ? `top:${savedPosition.top}px;left:${savedPosition.left}px;` : `top:400px;left:400px;`}
+      ${
+        savedPosition
+          ? `top:${savedPosition.top}px;left:${savedPosition.left}px;`
+          : `top:400px;left:400px;`
+      }
       z-index: calc(infinity);
       display: none;
       background: rgba(10, 10, 15, 0.75);
@@ -840,7 +869,7 @@
           left: left + "px",
           top: top + "px",
           right: "auto",
-          bottom: "auto"
+          bottom: "auto",
         });
       });
       const endDrag = () => {
@@ -848,7 +877,7 @@
         this.dragging = false;
         Storage.savePosition({
           left: this.element.offsetLeft,
-          top: this.element.offsetTop
+          top: this.element.offsetTop,
         });
         this.element.style.transition = "";
       };
@@ -922,9 +951,11 @@
           GM_setClipboard(text);
           this.setTemporaryNotice(messages.copied);
         } catch {
-          (_a = navigator.clipboard) == null ? void 0 : _a.writeText(text).then(() => {
-            this.setTemporaryNotice(messages.copied);
-          });
+          (_a = navigator.clipboard) == null
+            ? void 0
+            : _a.writeText(text).then(() => {
+                this.setTemporaryNotice(messages.copied);
+              });
         }
       };
       this.clear = () => {
@@ -947,7 +978,7 @@
     formatTime(seconds) {
       const m = Math.floor(seconds / 60);
       const s = Math.floor(seconds % 60);
-      const cs = Math.floor(seconds % 1 * 100);
+      const cs = Math.floor((seconds % 1) * 100);
       return `[${String(m).padStart(2, "0")}:${String(s).padStart(
         2,
         "0"
@@ -1020,7 +1051,11 @@
     getTitleText() {
       var _a;
       const t = document.querySelector("ytmusic-player-bar .title");
-      return ((_a = t == null ? void 0 : t.textContent) == null ? void 0 : _a.trim()) || null;
+      return (
+        ((_a = t == null ? void 0 : t.textContent) == null
+          ? void 0
+          : _a.trim()) || null
+      );
     }
     initTitle() {
       const t = this.getTitleText();
@@ -1067,10 +1102,18 @@
     }
     // 手動リセットの検出
     setupManualResetDetection() {
-      let previousTimestampCount = this.actions.hasTimestamps() ? this.actions.getTimestamps().length : 0;
+      let previousTimestampCount = this.actions.hasTimestamps()
+        ? this.actions.getTimestamps().length
+        : 0;
       const checkManualReset = () => {
-        const currentTimestampCount = this.actions.hasTimestamps() ? this.actions.getTimestamps().length : 0;
-        if (this.pendingReset && previousTimestampCount > 0 && currentTimestampCount === 0) {
+        const currentTimestampCount = this.actions.hasTimestamps()
+          ? this.actions.getTimestamps().length
+          : 0;
+        if (
+          this.pendingReset &&
+          previousTimestampCount > 0 &&
+          currentTimestampCount === 0
+        ) {
           this.cancelPendingReset();
         }
         previousTimestampCount = currentTimestampCount;
@@ -1123,16 +1166,16 @@
     }
   }
   const KEY_BINDINGS = {
-    "1": "add",
-    "2": "space",
-    "3": "undo",
-    "4": "geniusSearchBoth",
-    "5": "openChatgpt",
-    "6": "openLrcLib",
-    "7": "copy",
-    "8": "clear",
-    "9": "toggleAutoReset",
-    "0": "panelToggle"
+    1: "add",
+    2: "space",
+    3: "undo",
+    4: "geniusSearchBoth",
+    5: "openChatgpt",
+    6: "openLrcLib",
+    7: "copy",
+    8: "clear",
+    9: "toggleAutoReset",
+    0: "panelToggle",
   };
   class ShortcutManager {
     constructor(panel, actions, resetManager) {
@@ -1143,7 +1186,12 @@
     }
     setupShortcuts() {
       document.addEventListener("keydown", (e) => {
-        if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLElement && e.target.contentEditable === "true") {
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement ||
+          (e.target instanceof HTMLElement &&
+            e.target.contentEditable === "true")
+        ) {
           return;
         }
         if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
@@ -1176,7 +1224,8 @@
             openChatgpt();
             break;
           case "openLrcLib": {
-            const linkSelector = 'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]';
+            const linkSelector =
+              'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]';
             const buttonSelector = "button.blyrics-add-lyrics-button";
             const openLink = document.querySelector(linkSelector);
             if (openLink) {
@@ -1203,7 +1252,8 @@
       if (!next) {
         this.resetManager.cancelReset();
       }
-      const update = (_a = this.panel.footer) == null ? void 0 : _a._updateIndicator;
+      const update =
+        (_a = this.panel.footer) == null ? void 0 : _a._updateIndicator;
       update == null ? void 0 : update(next);
     }
     // Tampermonkey メニューコマンド
@@ -1229,12 +1279,14 @@
     const openYtmTsPanelWrapper = document.createElement("div");
     openYtmTsPanelWrapper.id = "openYtmTsPanelWrapper";
     const openYtmTsPanel = document.createElement("button");
-    openYtmTsPanel.className = "yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment";
+    openYtmTsPanel.className =
+      "yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono yt-spec-button-shape-next--size-m yt-spec-button-shape-next--icon-button yt-spec-button-shape-next--enable-backdrop-filter-experiment";
     openYtmTsPanel.type = "button";
     openYtmTsPanel.title = "Open Youtube Music Timestamp Panel";
     const openYtmTsPanelIcon = document.createElement("img");
     openYtmTsPanelIcon.alt = "Open Youtube Music Timestamp Panel";
-    openYtmTsPanelIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/icons/vector/icon-vector-48.webp";
+    openYtmTsPanelIcon.src =
+      "https://yossy17.github.io/youtube-music-timestamp/images/icons/vector/icon-vector-48.webp";
     openYtmTsPanelIcon.style.cssText = `
     width: 65%%;
     height: 65%;
@@ -1270,10 +1322,10 @@
       onSpace: () => actions.addSpace(),
       onUndo: () => actions.undo(),
       onCopy: () => actions.copy(),
-      onClear: () => actions.clear()
+      onClear: () => actions.clear(),
     });
     try {
-      if (false) ;
+      if (false);
       panel = new Panel(createActionHandlers());
       actions = new TimestampActions(panel);
       resetManager = new ResetManager(actions);
@@ -1281,9 +1333,8 @@
       shortcuts.setupMenuCommand();
       const panelController = new openPanel(panel);
       createOpenPanelButton(panelController);
-      if (false) ;
-    } catch (error) {
-    }
+      if (false);
+    } catch (error) {}
   })();
 })();
 //# sourceMappingURL=userscript.user.js.map
