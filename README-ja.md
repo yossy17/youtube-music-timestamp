@@ -1,10 +1,21 @@
 <p align="center">
- <img src="./images/icons/normal/icon-128.webp" height="128" alt="Logo">
- <h1 align="center">Youtube Music Timestamp</h1>
+  <img src="./images/icons/normal/icon-128.webp" height="128" alt="Logo">
+  <h1 align="center">Youtube Music Timestamp</h1>
 </p>
 
 <p align="center">
- <img src="./images/assets/cover.webp" height="512" alt="Cover">
+  <img src="./images/assets/cover.webp" height="512" alt="Cover">
+</p>
+
+<p align="center">
+  <table>
+    <thead>
+        <tr>
+            <th style="text-align:center"><a href="README.md">English</a></th>
+            <th style="text-align:center">日本語</th>
+        </tr>
+      </thead>
+  </table>
 </p>
 
 ## 概要
