@@ -1133,10 +1133,13 @@
     "8": "clear",
     "9": "toggleAutoReset",
     "0": "panelToggle",
-    w: "seekRewind5s",
-    e: "seekForward5s"
+    w: "seekRewind3s",
+    e: "seekForward3s",
+    ArrowLeft: "seekRewind5s",
+    ArrowRight: "seekForward5s"
   };
-  const SEEK_INTERVAL = 5;
+  const SEEK_INTERVAL_SHORT = 3;
+  const SEEK_INTERVAL_MEDIUM = 5;
   class ShortcutManager {
     constructor(panel, actions, resetManager) {
       this.panel = panel;
@@ -1195,11 +1198,17 @@
           case "panelToggle":
             this.panel.toggleVisibility();
             break;
+          case "seekRewind3s":
+            this.seek(-SEEK_INTERVAL_SHORT);
+            break;
+          case "seekForward3s":
+            this.seek(SEEK_INTERVAL_SHORT);
+            break;
           case "seekRewind5s":
-            this.seek(-SEEK_INTERVAL);
+            this.seek(-SEEK_INTERVAL_MEDIUM);
             break;
           case "seekForward5s":
-            this.seek(SEEK_INTERVAL);
+            this.seek(SEEK_INTERVAL_MEDIUM);
             break;
         }
       });
