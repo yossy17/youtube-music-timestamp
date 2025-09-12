@@ -29,6 +29,10 @@
 
 [![Better Lyrics](https://developer.chrome.com/static/docs/webstore/branding/image/206x58-chrome-web-bcb82d15b2486.png)](https://chromewebstore.google.com/detail/better-lyrics-lyrics-for/effdbpeggelllpfkjppbokhmmiinhlmg)
 
+また､ [Genius Lyrics Copy](https://greasyfork.org/ja/scripts/549204-genius-lyrics-copy) を使用することで Genius 上の歌詞を簡単にコピーすることができます｡
+
+[![Genius Lyrics Copy](https://raw.githubusercontent.com/yossy17/genius-lyrics-copy/master/images/icons/icon-48.webp)](https://greasyfork.org/ja/scripts/549204-genius-lyrics-copy)
+
 ## 機能
 
 ### 🎵 `.LRC` ファイルをサクッと作成
