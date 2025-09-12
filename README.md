@@ -56,7 +56,7 @@ Supports English / Japanese / Chinese / Korean
 ### ⚙️ Useful Extra Features
 
 Automatically reset timestamps when songs change (toggleable on/off)  
-No worries if you make a mistake! Use the `W` and `E` keys to skip backward or forward by just the right 5 seconds.
+No worries if you make a mistake! **Just right** playback
 
 ---
 
@@ -82,8 +82,8 @@ No worries if you make a mistake! Use the `W` and `E` keys to skip backward or f
   When the song changes, saved timestamps are automatically deleted after 5 seconds. Default is off.
 
 - ⌨️ **Perfect Playback (Controllable shortcut keys)**  
-  Adjust the playback position of the video using the `W` and `E` keys.  
-  Pressing `W` rewinds 5 seconds, and pressing `E` fast-forwards 5 seconds.
+  Adjust the playback position of the video using the `W` , `E` , `←` , and `→` keys.  
+  Pressing `W` or `E` moves the playback by 3 seconds, while the `←` and `→` keys adjust it by 5 seconds.
 
 > [!TIP]
 > When navigating to the ChatGPT link, if there's any content in the new page's text box, auto-insertion won't work.  
@@ -103,8 +103,10 @@ No worries if you make a mistake! Use the `W` and `E` keys to skip backward or f
 | 8   | ⏱️ Timestamp | Delete all timestamps                         |
 | 9   | ⚙️ Toggle    | Toggle automatic timestamp reset feature      |
 | 0   | ⚙️ Toggle    | Open/close panel                              |
-| W   | ⌨️ Playback  | Rewind 5 seconds                              |
-| E   | ⌨️ Playback  | Fast forward 5 seconds                        |
+| W   | ⌨️ Playback  | Rewind 3 seconds                              |
+| E   | ⌨️ Playback  | Fast forward 3 seconds                        |
+| ←   | ⌨️ Playback  | Rewind 5 seconds                              |
+| →   | ⌨️ Playback  | Fast forward 5 seconds                        |
 
 ## Usage
 

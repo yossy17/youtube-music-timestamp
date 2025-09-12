@@ -7,7 +7,7 @@
 // @description:ja Youtube Musicで.LRCファイルを簡単に作ることができます
 // @description:zh-CN 您可以在 YouTube Music 中轻松添加时间戳，并自动生成“.LRC”文件
 // @description:ko YouTube Music에서 손쉽게 타임스탬프를 추가하고 '.LRC' 파일을 자동으로 생성할 수 있습니다
-// @version 0.3.2
+// @version 0.3.3
  // @author Yos_sy
  // @match *://music.youtube.com/*
 // @namespace http://tampermonkey.net/
@@ -1133,10 +1133,13 @@
     "8": "clear",
     "9": "toggleAutoReset",
     "0": "panelToggle",
-    w: "seekRewind5s",
-    e: "seekForward5s"
+    w: "seekRewind3s",
+    e: "seekForward3s",
+    ArrowLeft: "seekRewind5s",
+    ArrowRight: "seekForward5s"
   };
-  const SEEK_INTERVAL = 5;
+  const SEEK_INTERVAL_SHORT = 3;
+  const SEEK_INTERVAL_MEDIUM = 5;
   class ShortcutManager {
     constructor(panel, actions, resetManager) {
       this.panel = panel;
@@ -1195,11 +1198,17 @@
           case "panelToggle":
             this.panel.toggleVisibility();
             break;
+          case "seekRewind3s":
+            this.seek(-SEEK_INTERVAL_SHORT);
+            break;
+          case "seekForward3s":
+            this.seek(SEEK_INTERVAL_SHORT);
+            break;
           case "seekRewind5s":
-            this.seek(-SEEK_INTERVAL);
+            this.seek(-SEEK_INTERVAL_MEDIUM);
             break;
           case "seekForward5s":
-            this.seek(SEEK_INTERVAL);
+            this.seek(SEEK_INTERVAL_MEDIUM);
             break;
         }
       });
