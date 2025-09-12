@@ -15,7 +15,7 @@ export const metadata = {
   author: "Yos_sy",
   match: ["*://music.youtube.com/*"],
   namespace: "http://tampermonkey.net/",
-  icon: "https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp",
+  icon: "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/normal/icon-48.webp",
   grant: [
     "GM_setClipboard",
     "GM_registerMenuCommand",

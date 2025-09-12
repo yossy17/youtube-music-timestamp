@@ -10,13 +10,13 @@ const mediaButtons: MediaButtons[] = [
     url: "https://github.com/yossy17/youtube-music-timestamp",
     title: "GitHub",
     imgSrc:
-      "https://yossy17.github.io/youtube-music-timestamp/images/assets/github.webp",
+      "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/github.webp",
   },
   {
     url: "https://x.com/yos_sy17",
     title: "Twitter",
     imgSrc:
-      "https://yossy17.github.io/youtube-music-timestamp/images/assets/twitter.webp",
+      "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/twitter.webp",
   },
 ];
 
