@@ -29,6 +29,10 @@ Please give it a try! 🤝
 
 [![Better Lyrics](https://developer.chrome.com/static/docs/webstore/branding/image/206x58-chrome-web-bcb82d15b2486.png)](https://chromewebstore.google.com/detail/better-lyrics-lyrics-for/effdbpeggelllpfkjppbokhmmiinhlmg)
 
+Also, by using [Genius Lyrics Copy](https://greasyfork.org/ja/scripts/549204-genius-lyrics-copy), you can easily copy lyrics from Genius.
+
+[![Genius Lyrics Copy](https://raw.githubusercontent.com/yossy17/genius-lyrics-copy/master/images/icons/icon-48.webp)](https://greasyfork.org/ja/scripts/549204-genius-lyrics-copy)
+
 ## Features
 
 ### 🎵 Create `.LRC` Files Instantly
