@@ -7,11 +7,11 @@
 // @description:ja Youtube Musicで.LRCファイルを簡単に作ることができます
 // @description:zh-CN 您可以在 YouTube Music 中轻松添加时间戳，并自动生成“.LRC”文件
 // @description:ko YouTube Music에서 손쉽게 타임스탬프를 추가하고 '.LRC' 파일을 자동으로 생성할 수 있습니다
-// @version 0.3.3
+// @version 0.3.4
  // @author Yos_sy
  // @match *://music.youtube.com/*
 // @namespace http://tampermonkey.net/
- // @icon https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp
+ // @icon https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/normal/icon-48.webp
  // @grant GM_setClipboard
 // @grant GM_registerMenuCommand
 // @grant GM_setValue
@@ -76,7 +76,7 @@
     cursor: grab;
   `;
     const ytmTimestampIcon = document.createElement("img");
-    ytmTimestampIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/icons/normal/icon-48.webp";
+    ytmTimestampIcon.src = "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/normal/icon-48.webp";
     ytmTimestampIcon.style.cssText = `
     width: 24px;
     height: 24px;
@@ -109,12 +109,12 @@
     {
       url: "https://github.com/yossy17/youtube-music-timestamp",
       title: "GitHub",
-      imgSrc: "https://yossy17.github.io/youtube-music-timestamp/images/assets/github.webp"
+      imgSrc: "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/github.webp"
     },
     {
       url: "https://x.com/yos_sy17",
       title: "Twitter",
-      imgSrc: "https://yossy17.github.io/youtube-music-timestamp/images/assets/twitter.webp"
+      imgSrc: "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/twitter.webp"
     }
   ];
   const createMediaButton = () => {
@@ -409,11 +409,49 @@
       rgba(0, 0, 0, 0.4) 0px 4px 12px inset,
       rgba(255, 255, 255, 0.02) 0px 1px 0px;
     color: rgb(200, 200, 210);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 0, 51, 0.4) transparent;
   `;
     return listBox;
   };
   const updateListBox = (listBox, timestamps) => {
-    listBox.textContent = timestamps.length ? timestamps.join("\n") : messages.nothing;
+    const content = timestamps.length ? timestamps.join("\n") : messages.nothing;
+    listBox.textContent = content;
+  };
+  const countLines = (text) => {
+    if (!text.trim()) return [];
+    const blocks = text.split(/\n(?:\s*\n)+/).filter((block) => block.trim());
+    return blocks.map((block) => {
+      return block.split("\n").filter((line) => line.trim()).length;
+    });
+  };
+  const formatNoticeDisplay = (lineCounts) => {
+    const LINE_COUNTS = 10;
+    if (lineCounts.length === 0) return "";
+    if (lineCounts.length <= LINE_COUNTS) {
+      return lineCounts.join(" ");
+    }
+    const visibleCounts = lineCounts.slice(-LINE_COUNTS);
+    return "... " + visibleCounts.join(" ");
+  };
+  const updateListBoxNotice = (listBox, timestamps, noticeWrapper) => {
+    const content = timestamps.length ? timestamps.join("\n") : messages.nothing;
+    listBox.textContent = content;
+    if (timestamps.length > 0) {
+      const lineCounts = countLines(content);
+      const display = formatNoticeDisplay(lineCounts);
+      if (noticeWrapper.setDefault) {
+        noticeWrapper.setDefault(display);
+      } else {
+        noticeWrapper.setMessage(display);
+      }
+    } else {
+      if (noticeWrapper.setDefault) {
+        noticeWrapper.setDefault("");
+      } else {
+        noticeWrapper.clear();
+      }
+    }
     listBox.scrollTop = listBox.scrollHeight;
   };
   const createContent = (actions) => {
@@ -451,15 +489,43 @@
     text-shadow: 0px 0px 8px rgba(255, 136, 136, 0.3);
   `;
     noticeWrapper.appendChild(noticeMessage);
+    let defaultMessage = "";
+    let temporaryTimer = null;
     const setMessage = (msg) => {
       noticeMessage.textContent = msg || "";
     };
     const clear = () => {
-      noticeMessage.textContent = "";
+      noticeMessage.textContent = defaultMessage;
+    };
+    const setDefault = (msg) => {
+      defaultMessage = msg;
+      if (!temporaryTimer) {
+        noticeMessage.textContent = defaultMessage;
+      }
+    };
+    const setTemporary = (msg, duration = 3e3) => {
+      if (temporaryTimer) {
+        clearTimeout(temporaryTimer);
+      }
+      noticeMessage.textContent = msg;
+      temporaryTimer = window.setTimeout(() => {
+        noticeMessage.textContent = defaultMessage;
+        temporaryTimer = null;
+      }, duration);
+    };
+    const restoreDefault = () => {
+      if (temporaryTimer) {
+        clearTimeout(temporaryTimer);
+        temporaryTimer = null;
+      }
+      noticeMessage.textContent = defaultMessage;
     };
     return Object.assign(noticeWrapper, {
       setMessage,
-      clear
+      clear,
+      setDefault,
+      setTemporary,
+      restoreDefault
     });
   };
   function getCurrentTrackInfo() {
@@ -513,7 +579,7 @@
     });
     const geniusIcon = document.createElement("img");
     geniusIcon.alt = "Genius";
-    geniusIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/assets/genius.webp";
+    geniusIcon.src = "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/genius.webp";
     geniusIcon.style.cssText = `
     width: 100%;
     height: 100%;
@@ -664,7 +730,7 @@
     });
     const chatgptIcon = document.createElement("img");
     chatgptIcon.alt = "ChatGPT";
-    chatgptIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/assets/chatgpt.webp";
+    chatgptIcon.src = "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/chatgpt.webp";
     chatgptIcon.style.cssText = `
     width: 100%;
     height: 100%;
@@ -780,7 +846,6 @@
       );
       const main = createContent(actions);
       this.listBox = main.listBox;
-      this.updateListBox = main.updateListBox;
       this.footer = createFooter();
       this.element.append(header, main.element, this.footer);
       this.setupDragEvents();
@@ -877,7 +942,7 @@
       this.setVisible(!isVisible);
     }
     updateTimestampList(timestamps) {
-      this.updateListBox(this.listBox, timestamps);
+      updateListBoxNotice(this.listBox, timestamps, this.footer._notice);
     }
     setNotice(message) {
       this.footer._notice.setMessage(message);
@@ -1258,7 +1323,7 @@
     openYtmTsPanel.title = "Open Youtube Music Timestamp Panel";
     const openYtmTsPanelIcon = document.createElement("img");
     openYtmTsPanelIcon.alt = "Open Youtube Music Timestamp Panel";
-    openYtmTsPanelIcon.src = "https://yossy17.github.io/youtube-music-timestamp/images/icons/vector/icon-vector-48.webp";
+    openYtmTsPanelIcon.src = "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/vector/icon-vector-48.webp";
     openYtmTsPanelIcon.style.cssText = `
     width: 65%%;
     height: 65%;

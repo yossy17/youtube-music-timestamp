@@ -1,12 +1,11 @@
 import { Storage } from "../storage";
 import { createHeader } from "./header";
-import { createContent, ButtonActions } from "./content";
+import { createContent, ButtonActions, updateListBoxNotice } from "./content";
 import { createFooter } from "./footer";
 
 export class Panel {
   private element: HTMLElement;
   private listBox: HTMLElement;
-  private updateListBox: (listBox: HTMLElement, timestamps: string[]) => void;
   private footer: HTMLElement & {
     _notice: any;
     _updateIndicator: (enabled: boolean) => void;
@@ -25,7 +24,6 @@ export class Panel {
 
     const main = createContent(actions);
     this.listBox = main.listBox;
-    this.updateListBox = main.updateListBox;
 
     this.footer = createFooter();
 
@@ -152,7 +150,7 @@ export class Panel {
   }
 
   updateTimestampList(timestamps: string[]): void {
-    this.updateListBox(this.listBox, timestamps);
+    updateListBoxNotice(this.listBox, timestamps, this.footer._notice);
   }
 
   setNotice(message: string): void {

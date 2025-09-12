@@ -22,16 +22,58 @@ export const createNoticeWrapper = () => {
 
   noticeWrapper.appendChild(noticeMessage);
 
+  // デフォルトメッセージを保存
+  let defaultMessage = "";
+  let temporaryTimer: number | null = null;
+
   const setMessage = (msg: string) => {
     noticeMessage.textContent = msg || "";
   };
 
   const clear = () => {
-    noticeMessage.textContent = "";
+    noticeMessage.textContent = defaultMessage;
+  };
+
+  // デフォルトメッセージを設定
+  const setDefault = (msg: string) => {
+    defaultMessage = msg;
+    // 他の一時的なメッセージが表示されていない場合はすぐに反映
+    if (!temporaryTimer) {
+      noticeMessage.textContent = defaultMessage;
+    }
+  };
+
+  // 一時的なメッセージを表示
+  const setTemporary = (msg: string, duration = 3000) => {
+    // 既存のタイマーをクリア
+    if (temporaryTimer) {
+      clearTimeout(temporaryTimer);
+    }
+
+    // 一時的なメッセージを表示
+    noticeMessage.textContent = msg;
+
+    // 指定時間後にデフォルトメッセージに戻す
+    temporaryTimer = window.setTimeout(() => {
+      noticeMessage.textContent = defaultMessage;
+      temporaryTimer = null;
+    }, duration);
+  };
+
+  // デフォルトメッセージに即座に戻す
+  const restoreDefault = () => {
+    if (temporaryTimer) {
+      clearTimeout(temporaryTimer);
+      temporaryTimer = null;
+    }
+    noticeMessage.textContent = defaultMessage;
   };
 
   return Object.assign(noticeWrapper, {
     setMessage,
     clear,
+    setDefault,
+    setTemporary,
+    restoreDefault,
   });
 };
