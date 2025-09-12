@@ -1,7 +1,12 @@
 import { createActionButtons, ButtonActions } from "./content/actionButtons";
-import { createListBox, updateListBox } from "./content/listBox";
+import {
+  createListBox,
+  updateListBox,
+  updateListBoxNotice,
+} from "./content/listBox";
 
 export type { ButtonActions };
+export { updateListBoxNotice };
 
 export const createContent = (actions: ButtonActions) => {
   const content = document.createElement("div");
