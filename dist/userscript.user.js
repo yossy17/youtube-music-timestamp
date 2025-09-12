@@ -7,7 +7,7 @@
 // @description:ja Youtube Musicで.LRCファイルを簡単に作ることができます
 // @description:zh-CN 您可以在 YouTube Music 中轻松添加时间戳，并自动生成“.LRC”文件
 // @description:ko YouTube Music에서 손쉽게 타임스탬프를 추가하고 '.LRC' 파일을 자동으로 생성할 수 있습니다
-// @version 0.3.2
+// @version 0.3.3
  // @author Yos_sy
  // @match *://music.youtube.com/*
 // @namespace http://tampermonkey.net/
