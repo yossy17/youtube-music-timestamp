@@ -18,7 +18,7 @@ export function createOpenPanelButton(controller: openPanel): HTMLElement {
   const openYtmTsPanelIcon = document.createElement("img");
   openYtmTsPanelIcon.alt = "Open Youtube Music Timestamp Panel";
   openYtmTsPanelIcon.src =
-    "https://yossy17.github.io/youtube-music-timestamp/images/icons/vector/icon-vector-48.webp";
+    "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/vector/icon-vector-48.webp";
   openYtmTsPanelIcon.style.cssText = `
     width: 65%%;
     height: 65%;

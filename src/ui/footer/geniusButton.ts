@@ -33,7 +33,7 @@ export const createGeniusButton = () => {
   const geniusIcon = document.createElement("img");
   geniusIcon.alt = "Genius";
   geniusIcon.src =
-    "https://yossy17.github.io/youtube-music-timestamp/images/assets/genius.webp";
+    "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/genius.webp";
   geniusIcon.style.cssText = `
     width: 100%;
     height: 100%;

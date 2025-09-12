@@ -29,7 +29,7 @@ export const createChatgptButton = (): HTMLElement => {
   const chatgptIcon = document.createElement("img");
   chatgptIcon.alt = "ChatGPT";
   chatgptIcon.src =
-    "https://yossy17.github.io/youtube-music-timestamp/images/assets/chatgpt.webp";
+    "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/assets/chatgpt.webp";
   chatgptIcon.style.cssText = `
     width: 100%;
     height: 100%;
