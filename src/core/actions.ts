@@ -81,7 +81,10 @@ export class TimestampActions {
   };
 
   addSpace = (): void => {
-    this.timestamps.push("");
+    const video = document.querySelector("video");
+    if (!video) return;
+
+    this.timestamps.push(this.formatTime(video.currentTime) + "(ytm-space)");
     this.updateDisplay();
   };
 
