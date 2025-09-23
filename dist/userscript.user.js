@@ -7,7 +7,7 @@
 // @description:ja Youtube Musicで.LRCファイルを簡単に作ることができます
 // @description:zh-CN 您可以在 YouTube Music 中轻松添加时间戳，并自动生成“.LRC”文件
 // @description:ko YouTube Music에서 손쉽게 타임스탬프를 추가하고 '.LRC' 파일을 자동으로 생성할 수 있습니다
-// @version 0.3.6
+// @version 0.3.7
  // @author Yos_sy
  // @match *://music.youtube.com/*
 // @namespace http://tampermonkey.net/
@@ -1228,6 +1228,7 @@
     }
     setupShortcuts() {
       document.addEventListener("keydown", (e) => {
+        var _a, _b, _c;
         if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLElement && e.target.contentEditable === "true") {
           return;
         }
@@ -1261,17 +1262,28 @@
             openChatgpt();
             break;
           case "openLrcLib": {
-            const linkSelector = 'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]';
-            const buttonSelector = "button.blyrics-add-lyrics-button";
-            const openLink = document.querySelector(linkSelector);
-            if (openLink) {
-              window.open(openLink.href, "_blank", "noopener,noreferrer");
-            } else {
-              const openButton = document.querySelector(buttonSelector);
-              if (openButton) {
-                openButton.click();
-              }
-            }
+            const wrapperElement = "div.content-info-wrapper.ytmusic-player-bar > ";
+            const wrapperBylineElement = ".byline-wrapper > .subtitle > yt-formatted-string.byline.ytmusic-player-bar > ";
+            const titleElement = document.querySelector(
+              wrapperElement + "yt-formatted-string.title.ytmusic-player-bar"
+            );
+            const artistElement = document.querySelector(
+              wrapperElement + wrapperBylineElement + "a[href^='channel/']"
+            );
+            const albumElement = document.querySelector(
+              wrapperElement + wrapperBylineElement + "a[href^='browse/']"
+            );
+            const videoElement = document.querySelector("video");
+            const title = ((_a = titleElement == null ? void 0 : titleElement.textContent) == null ? void 0 : _a.trim()) || "";
+            const artist = ((_b = artistElement == null ? void 0 : artistElement.textContent) == null ? void 0 : _b.trim()) || "";
+            const album = ((_c = albumElement == null ? void 0 : albumElement.textContent) == null ? void 0 : _c.trim()) || "";
+            const duration = (videoElement == null ? void 0 : videoElement.duration) ? Math.round(videoElement.duration).toString() : "";
+            const uploadUrl = new URL("https://lrclibup.boidu.dev/");
+            if (title) uploadUrl.searchParams.append("title", title);
+            if (artist) uploadUrl.searchParams.append("artist", artist);
+            if (album) uploadUrl.searchParams.append("album", album);
+            if (duration) uploadUrl.searchParams.append("duration", duration);
+            window.open(uploadUrl.toString(), "_blank", "noopener,noreferrer");
             break;
           }
           case "panelToggle":
