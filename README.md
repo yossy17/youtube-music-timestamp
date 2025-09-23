@@ -93,6 +93,9 @@ No worries if you make a mistake! **Just right** playback
 > When navigating to the ChatGPT link, if there's any content in the new page's text box, auto-insertion won't work.  
 > Clear all input content and try opening again.
 
+> [!WARNING]
+> The output content of ChatGPT is not 100% accurate. Please check the content before use.
+
 ## Shortcut List
 
 | Key | Type         | Description                                   |
