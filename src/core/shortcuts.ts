@@ -88,22 +88,38 @@ export class ShortcutManager {
           openChatgpt();
           break;
         case "openLrcLib": {
-          const linkSelector =
-            'div.blyrics-footer__container > a[href^="https://lrclibup.boidu.dev/"]';
-          const buttonSelector = "button.blyrics-add-lyrics-button";
+          // 埋め込み用の楽曲情報を取得
+          const wrapperElement =
+            "div.content-info-wrapper.ytmusic-player-bar > ";
+          const wrapperBylineElement =
+            ".byline-wrapper > .subtitle > yt-formatted-string.byline.ytmusic-player-bar > ";
 
-          const openLink =
-            document.querySelector<HTMLAnchorElement>(linkSelector);
+          const titleElement = document.querySelector<HTMLElement>(
+            wrapperElement + "yt-formatted-string.title.ytmusic-player-bar"
+          );
+          const artistElement = document.querySelector<HTMLAnchorElement>(
+            wrapperElement + wrapperBylineElement + "a[href^='channel/']"
+          );
+          const albumElement = document.querySelector<HTMLAnchorElement>(
+            wrapperElement + wrapperBylineElement + "a[href^='browse/']"
+          );
+          const videoElement =
+            document.querySelector<HTMLVideoElement>("video");
 
-          if (openLink) {
-            window.open(openLink.href, "_blank", "noopener,noreferrer");
-          } else {
-            const openButton =
-              document.querySelector<HTMLButtonElement>(buttonSelector);
-            if (openButton) {
-              openButton.click();
-            }
-          }
+          const title = titleElement?.textContent?.trim() || "";
+          const artist = artistElement?.textContent?.trim() || "";
+          const album = albumElement?.textContent?.trim() || "";
+          const duration = videoElement?.duration
+            ? Math.round(videoElement.duration).toString()
+            : "";
+
+          const uploadUrl = new URL("https://lrclibup.boidu.dev/");
+          if (title) uploadUrl.searchParams.append("title", title);
+          if (artist) uploadUrl.searchParams.append("artist", artist);
+          if (album) uploadUrl.searchParams.append("album", album);
+          if (duration) uploadUrl.searchParams.append("duration", duration);
+
+          window.open(uploadUrl.toString(), "_blank", "noopener,noreferrer");
           break;
         }
         case "panelToggle":
