@@ -33,8 +33,10 @@ export const updateListBox = (listBox: HTMLElement, timestamps: string[]) => {
 const countLines = (text: string): number[] => {
   if (!text.trim()) return [];
 
-  // 空行で区切る
-  const blocks = text.split(/\n(?:\s*\n)+/).filter((block) => block.trim());
+  // ytm-spaceで区切る
+  const blocks = text
+    .split(/\[\d+:\d{2}\.\d{2,}\]\s*\(ytm-space\)/)
+    .filter((block) => block.trim());
 
   // 各ブロックの非空行数をカウント
   return blocks.map((block) => {
