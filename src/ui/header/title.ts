@@ -12,7 +12,7 @@ export const createTitle = (): HTMLElement => {
   // タイトルアイコン
   const ytmTimestampIcon = document.createElement("img");
   ytmTimestampIcon.src =
-    "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/normal/icon-48.webp";
+    "https://github.com/yossy17/youtube-music-timestamp/raw/master/images/icons/icon-48.webp";
   ytmTimestampIcon.style.cssText = `
     width: 24px;
     height: 24px;
