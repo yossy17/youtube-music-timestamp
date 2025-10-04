@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./images/icons/normal/icon-128.webp" height="128" alt="Logo">
+  <img src="./images/icons/icon-128.webp" height="128" alt="Logo">
   <h1 align="center">Youtube Music Timestamp</h1>
 </p>
 

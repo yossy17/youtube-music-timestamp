@@ -3,6 +3,7 @@ import path from "path";
 import { metadata as rawMetadata } from "./src/metadata.js";
 import fs from "fs";
 import { fileURLToPath } from "url";
+import type { Plugin, OutputBundle, NormalizedOutputOptions } from "rollup";
 
 // ES modules での __dirname 取得
 const __filename = fileURLToPath(import.meta.url);
@@ -10,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 
-function buildMeta(metadata, isDev = false) {
+function buildMeta(metadata: typeof rawMetadata, isDev = false) {
   const metaData = {
     ...metadata,
     version: isDev ? pkg.version + "-dev" : pkg.version,
@@ -22,6 +23,10 @@ function buildMeta(metadata, isDev = false) {
           ko: metadata.name.ko + " (개발판)",
         }
       : metadata.name,
+    icon:
+      "https://github.com/yossy17/" +
+      pkg.name +
+      "/raw/master/images/icons/normal/icon-48.webp",
     updateURL:
       "https://github.com/yossy17/" +
       pkg.name +
@@ -70,10 +75,10 @@ const metadata = {
   version: pkg.version,
 };
 
-function userscriptMetaPlugin(isDev = false) {
+function userscriptMetaPlugin(isDev = false): Plugin {
   return {
     name: "userscript-meta",
-    generateBundle(options, bundle) {
+    generateBundle(_options: NormalizedOutputOptions, bundle: OutputBundle) {
       const fileName = "userscript.user.js";
       const chunk = bundle[fileName];
       if (chunk && chunk.type === "chunk") {
