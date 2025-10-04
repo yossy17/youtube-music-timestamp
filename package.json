@@ -1,7 +1,7 @@
 {
   "name": "youtube-music-timestamp",
   "version": "0.3.8",
-  "description": "Capture and manage timestamps in YouTube Music",
+  "description": "Easily add timestamps in YouTube Music and automatically create '.LRC' files",
   "keywords": [
     "userscript"
   ],
